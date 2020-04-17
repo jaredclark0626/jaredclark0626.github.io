@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Fri, 17 Apr 2020 10:02:17 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2020 11:21:42 -0400</lastBuildDate>
     
 	<atom:link href="https://jaredclark0626.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Test</title>
+      <link>https://jaredclark0626.github.io/posts/test/</link>
+      <pubDate>Fri, 17 Apr 2020 11:21:42 -0400</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/posts/test/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Managing Microsoft Azure App Service Plan</title>
