@@ -7,17 +7,44 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Fri, 17 Apr 2020 11:21:42 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2020 10:02:17 -0400</lastBuildDate>
     
 	<atom:link href="https://jaredclark0626.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>untagged</title>
-      <link>https://jaredclark0626.github.io/tags/untagged/</link>
-      <pubDate>Fri, 17 Apr 2020 11:21:42 -0400</pubDate>
+      <title>Azure</title>
+      <link>https://jaredclark0626.github.io/tags/azure/</link>
+      <pubDate>Fri, 17 Apr 2020 10:02:17 -0400</pubDate>
       
-      <guid>https://jaredclark0626.github.io/tags/untagged/</guid>
+      <guid>https://jaredclark0626.github.io/tags/azure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Azure App Service Plans</title>
+      <link>https://jaredclark0626.github.io/tags/azure-app-service-plans/</link>
+      <pubDate>Fri, 17 Apr 2020 10:02:17 -0400</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/tags/azure-app-service-plans/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Azure DevOps</title>
+      <link>https://jaredclark0626.github.io/tags/azure-devops/</link>
+      <pubDate>Fri, 17 Apr 2020 10:02:17 -0400</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/tags/azure-devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CI/CD Pipelines</title>
+      <link>https://jaredclark0626.github.io/tags/ci/cd-pipelines/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/tags/ci/cd-pipelines/</guid>
       <description></description>
     </item>
     

@@ -6,27 +6,185 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Fri, 17 Apr 2020 11:21:42 -0400</lastBuildDate>
+		<lastBuildDate>Fri, 17 Apr 2020 10:02:17 -0400</lastBuildDate>
 		<atom:link href="https://jaredclark0626.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
 		
 		<item>
-			<title>Test</title>
-			<link>https://jaredclark0626.github.io/posts/test/</link>
-			<pubDate>Fri, 17 Apr 2020 11:21:42 -0400</pubDate>
-			
-			<guid>https://jaredclark0626.github.io/posts/test/</guid>
-			<description></description>
-			<content type="html"><![CDATA[]]></content>
-		</item>
-		
-		<item>
-			<title>Managing Microsoft Azure App Service Plan</title>
+			<title>Creating and deploying Microsoft Azure App Service Plan</title>
 			<link>https://jaredclark0626.github.io/posts/managing-microsoft-azure-app-service-plan/</link>
 			<pubDate>Fri, 17 Apr 2020 10:02:17 -0400</pubDate>
 			
 			<guid>https://jaredclark0626.github.io/posts/managing-microsoft-azure-app-service-plan/</guid>
-			<description></description>
-			<content type="html"><![CDATA[]]></content>
+			<description>Short-hand:
+ Azure DevOps - ADO Contiouses Deployment - CD Continouse Integration - CI VS - Visual Studio  In this blog I will give you an overview of Microsoft App Service plans, how to create and app Service Plan and finally how to create an App Service. We will talk about options on how to deploy code to App Services. To kick this off let me give you an overview of Microsoft App Service Plan.</description>
+			<content type="html"><![CDATA[<p>Short-hand:</p>
+<ul>
+<li>Azure DevOps - ADO</li>
+<li>Contiouses Deployment - CD</li>
+<li>Continouse Integration - CI</li>
+<li>VS - Visual Studio</li>
+</ul>
+<p>In this blog I will give you an overview of Microsoft App Service plans, how to create and app Service Plan and finally how to create an App Service. We will talk about options on how to deploy code to App Services. To kick this off let me give you an overview of Microsoft App Service Plan.</p>
+<p><img src="/img/AzureAppServicePlan/Image0.png" alt="Image0"></p>
+<p>App Service Plan Overview</p>
+<p>A Microsoft App Service Plan defines a set of compute resources for an App Service to run. Depending on the tier of the App Service Plan you choose you can run multiple App Services in a single App Service Plan. I have listed below what types of App Services you can run with in an App Service plan.</p>
+<p>Apps Service types:</p>
+<ul>
+<li>Web Apps</li>
+<li>API Apps</li>
+<li>Mobile Apps</li>
+<li>Function Apps</li>
+</ul>
+<p>App Services support a verity of languages such as:</p>
+<ul>
+<li>ASP.NET</li>
+<li>ASP.NET Core</li>
+<li>JAVA</li>
+<li>Ruby</li>
+<li>Node.js</li>
+<li>PHP</li>
+<li>Python</li>
+</ul>
+<p>I like to think of an App Service Plan as a container for App Service(s). You cannot have an App Service without an App Service plan. App Services define a set of compute resources that you App Service(s) can use.</p>
+<p>App Service Plan defines:</p>
+<ul>
+<li>Azure region</li>
+<li>Min/Max number of VM instances</li>
+<li>Size of VM instances
+<ul>
+<li>CPU</li>
+<li>RAM</li>
+<li>Storage</li>
+</ul>
+</li>
+<li>Pricing Tier</li>
+</ul>
+<p>Please note that you can change the App Service plan pricing tier after it is provisioned. This allows you to test and scale out/up you App Service plan on-demand. There are two types of scaling models within an App Service Plan. Scaling up refers to adding more resources VM instances where Scaling out refers to adding more VM&rsquo;s to the App Service Plan. With that said you can configure Auto-Scaling which can scale up or down depending on demand.</p>
+<p>App service deployments</p>
+<p>Multi-tenant Service allows you to deploy your App Service plan on a Shared Network infrastructure. This means you are sharing the network with other tenants in Azure. Alternatively, you can set up an App Service Environment (ASE) which you deploy your own VNET and have an isolated environment for you App Service Plan to run on. There is one more option for deployments and that is called Azure Stack deployment. This allows you to deploy your App Service plan on-premises.</p>
+<p>Essentially, an App Service plan is a set of VM&rsquo;s. Each VM is known as an instance and each instance is hosting an App Service. Each instance has a C:\ and D:\ drive. The C:\ drive is used for temporary storage and the D:\ drive is used for sites code and log files. These drives aren&rsquo;t stored on each instance, instead they are hosted in a Storage Container and mapped to each instance. All instances in your App Service Plan have access to the D:\ drive. When deploying your code all instances will have access to the same code base via the D:\drive.</p>
+<p>Every App runs as a low privileged worker process called the application pool identity. Apps are isolated within an App Service Plan. When using an App Service Plan, you don&rsquo;t have access to the underlying OS components such as:</p>
+<ul>
+<li>Registry</li>
+<li>Cryptography subsystem</li>
+<li>Graphics subsystem</li>
+</ul>
+<p>Now let&rsquo;s move onto creating an App Service Plan!</p>
+<p>Creating an App Service Plan</p>
+<p>Log into your azure account and search for App Service Plan. Once on the App Service Plan page, click &lsquo;Create App Service Plan&rsquo;. If you have a resource already created then choose that resource group to hold you App Service Plan. In our case we are going to create a new resource group by clicking on the &lsquo;Create new&rsquo; button. This name has to be unique within Azure. Type in the name of the resource group you would like to create and click create. Next, we will need to give the App Service Plan a name which does not need to be unique within Azure.</p>
+<p>We will need to choose the underlying OS that our App Services will run on. We have the option of either Windows or Linux, keeping in mind that we will not be able to mix the two OS&rsquo;s in a single App Service Plan. We will stick with the Windows OS and EastUS region. For the pricing tier we will use the Dev/Test free pricing tier.</p>
+<p><img src="/img/AzureAppServicePlan/Image1.png" alt="Image1"></p>
+<p>Let&rsquo;s apply a &lsquo;Dev&rsquo;: &lsquo;Test&rsquo; tag to this App Service plan for easy configuration and maintenance. Click next and let&rsquo;s run the preliminary checks to verify the App Service Plan is configured correctly. Once the checks clear we can create the App Service plan by clicking the create button. Now we will not be able to create a Web App from inside the App Service Plan, we will need to create a new Web App Resource. Search for Web App in azure and click create new Web App. Here we will have an option to add the new Web App to the existing App Service Plan resource group or create a new resource group. For this demo we will add the Web App to the existing resource group for the App Service Plan.</p>
+<p>We will need to name the Web App which will need to be unique across Azure. The name is prefixed with &lsquo;.azurewebsites.net&rsquo; prefix. We will have an option to publish the Web App via Code or a Docker container. We will publish the Web App using the Code option. There is an option for runtime which the Web App will use when running. Keep in mind some of these Runtimes can only be run on respective OS&rsquo;s. In our case we will use .NET Core 3.1 and choose the Windows OS. We will choose the East US for the region. This will find App Service Plan that we provisioned earlier and default to that App Service Plan. If you have multiple app Service plans be sure to choose the correct one.</p>
+<p>Next, we will have an option to choose if we want to add monitoring to our Web App but in our case, we will turn off monitoring. We will apply a &lsquo;Dev&rsquo;:&lsquo;Test&rsquo; tag to our Web App can let the preliminary checks run. Once the checks pass, we can create the Web App. Next, I want to take a brief moment and talk to you about networking in regards to Web Apps and App Service Plans.</p>
+<p>Networking</p>
+<p>With the multi-tenet App Service plan, we use shared resources with one of them being a shared IP address. If you navigate to the Web App and choose Custom Domains you will find the shared IP address our Web App is using. Outbound traffic goes out to the internet through a set of outbound IP address, those IP address can be found on the Properties tab. App Services Access Restrictions restrict incoming network access from a range of IP address and/or virtual network subnet(s). This will block traffic from internet and only allow access from you VNET.</p>
+<p>App Service Environment (ASE)</p>
+<p>When you run your apps on &lsquo;Production&rsquo; or &lsquo;Isolated&rsquo; tiers you are using dedicated resources. In our case we are using the &lsquo;Dev/Test&rsquo; tier which uses shared resources. App Service Environment is only available on &lsquo;Production&rsquo; and &lsquo;Isolated&rsquo; tiers. This allows you to have an isolated network, massive scale-out options. DV2 VMs (Powerful VMs), access to on-premise environment, External ASE, and ILB ASE (no public internet access).</p>
+<p>App Service Environments allow a max of 100 App Service plan instances. Those App Service Plans cam be distributed and you can have more then 100 App Service plan but you will need to call Microsoft support. Traffic manager can distribute requests between ASE instances and pricing is a flat rate opposed to pay what you use model.</p>
+<p>Creating an App Service Environment (ASE)</p>
+<p>Login to Azure and search for App Service Environment (ASE). Click create new App Service Environment. Let&rsquo;s create new resource group for the App Service Environment. I named my resource group &lsquo;ASE-RS-DEV-TEST&rsquo; and named the ASE instance &lsquo;ASE-DEV-TEST-JCLARK0909&rsquo; We are going to use an internal virtual IP type. Next, we will need to create a virtual network and subnet for the ASE instance to run on. We will need to add a subnet address block which will be the virtual network address block prefixed with &lsquo;.0/28&rsquo; Lets add a &lsquo;Dev&rsquo;:&lsquo;Test&rsquo; tag. Alternatively, you do not need to create an App Service Environment (ASE) since it is costly, we can stick with the free dev/test pricing tier.</p>
+<p>Deploying an App Service</p>
+<p>First, let&rsquo;s discuss the deployment options for deploying apps to an app service plan. We will run through a few option for deploying code to an app service listed below:</p>
+<ul>
+<li>
+<p>Azure CLI</p>
+</li>
+<li>
+<p>&ldquo;Run from package&rdquo; from Azure Storage</p>
+</li>
+<li>
+<p>Azure DevOps CI/CD pipeline</p>
+</li>
+</ul>
+<p>Azure CLI Deployment</p>
+<p>First let&rsquo;s start by deploying code with Azure CLI. There is a few option when using Azure CLI. You can either login to Azure and use the cloud shell feature which requires a storage container. Alternatively, you can download the Azure CLI to your local machine and run the commands from your local environment. I will be running these commands from my local machine.</p>
+<p>Link to download Azure CLI: <a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest">https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest</a></p>
+<p>Once downloaded we want to run Command prompt as administrator and run the following command to login.</p>
+<p>CMD: az login</p>
+<p>A new window will open where you can authenticate to your Azure subscription. You want to verify that the account you are authenticating with has administrator rights to the App Service Plan and the App Service.</p>
+<p>Log into Visual Studio and open your solution file. Once opened we can build the solution and right click on the Web app in the solution explorer then click publish. On this screen we will have a few option on where we want to publish the output of our web app build. In our case we are going to publish the web app to a local folder and use the Azure CLI to upload it to the App Service.</p>
+<p>I<img src="/img/AzureAppServicePlan/Image2.png" alt="Image2"></p>
+<p>Once you published the web app to a local folder, we need to compress it into a zip file. Right click and choose to send it to a compressed folder. Now we are ready to upload the zip folder via Azure CLI to our App Service. Below I have listed a few parameters and their descriptions.</p>
+<ul>
+<li>
+<p>&ndash;resource-group = Azure resource group</p>
+</li>
+<li>
+<p>&ndash;name = Azure App Service</p>
+</li>
+<li>
+<p>&ndash;src = Path to zip folder</p>
+</li>
+<li>
+<p>config-zip = Azure parameter for uploading zip folder</p>
+</li>
+</ul>
+<p>CMD: az webapp deployment source config-zip &ndash;resource-group TestAppServicePlan &ndash;name TestWebApp0909 &ndash;src &ldquo;C:\repo\Azure\AppServicePlan\03\demos\code1\PSWebApp\PSWebApp\bin\Release\netcoreapp2.1\publish\deployment.zip&rdquo;</p>
+<p>It will take a few second’s for to upload the zip folder to azure and KUDO to unzip the folder. To verify you have successfully deployed the app service plan via Azure CLI you will get back meta data about the deployment in the CMD windows.</p>
+<p>Note: There is an item listed in the meta data called &lsquo;Complete&rsquo; that lets you know if the deployment was successful. Also, there is a &lsquo;log_URL&rsquo; which will point the log file for the deployment. I found the log file to be helpful when troubleshooting failed deployments.</p>
+<p><img src="/img/AzureAppServicePlan/Image3.png" alt="Image3"></p>
+<p>Azure Storage Deployment</p>
+<p>To make things easier let&rsquo;s install Microsoft Azure Storage Explorer.</p>
+<p>Download link: <a href="https://azure.microsoft.com/en-us/features/storage-explorer/">https://azure.microsoft.com/en-us/features/storage-explorer/</a></p>
+<p>Once Azure Storage Explorer is installed, we will need to sync it to our Azure subscription. On the left-hand side of the screen you will see you Azure storage resources. Now, we need to create an Azure Storage account to store the contents our Web App. Log into Azure and search storage accounts. Click create new storage account then use the App Service Plan resource group or create a new resource group. In our case we will be using the existing App Service Plan resource group. Name the storage account and place it in the same region as the App Service Plan. Let&rsquo;s select &lsquo;BlobStorage&rsquo; and &lsquo;Local-redundant storage (LRS)'. For the access tier lets select &lsquo;cool&rsquo; and click next. On the networking tab we can use the default which is &lsquo;Public endpoint (all networks)'. Use the default for the security section and add the &lsquo;Dev&rsquo;:&lsquo;test&rsquo; tag to the storage account. Let the preliminary checks run and create the storage account.</p>
+<p><img src="/img/AzureAppServicePlan/Image4.png" alt="Image4"></p>
+<p>Open the storage account and click on containers then create a new container called &lsquo;zip&rsquo;. Here will be where we upload the contents of our web app. When you create the container make sure to set the &lsquo;Public access level&rsquo; to blob. Open Azure Storage explorer and navigate to the zip blob container then drag and drop the zip folder with our web app.</p>
+<p><img src="/img/AzureAppServicePlan/Image5.png" alt="Image5"></p>
+<p>The container access is set to private which means no one can&rsquo;t get to this storage account without a token. Right click on the zip folder in azure storage explorer and select &lsquo;Get Shared Access Signature&rsquo;. A new window will appear where we can set some permissions explicitly on this container. The app service needs read access to the storage container. Let&rsquo;s add that permission to the storage container and set the Expiry time from a year from now. If this is production you will want to set a longer Expiry time.</p>
+<p><img src="/img/AzureAppServicePlan/Image6.png" alt="Image6"></p>
+<p>Another window will open which the storage account URL with the starred access token appended to it. Copy that URL as a query string parameter and open the web app in azure portal. Navigate to configuration and we need to add a new App setting. Click the plus next to &lsquo;New Application Setting&rsquo; and add the following parameter with the copied shared access token URL as the value.</p>
+<p>Parameter: WEBSITE_RUN_FROM_PACKAGE</p>
+<p>Refresh the App Service endpoint URL and now the app service is deployed with using and Azure Storage Account. Whenever that storage account is updated it will deploy the contents of the storage account. Now the site is running from a zip from stored on Azure App Storage.</p>
+<p>Azure DevOps (ADO) CI/CD pipeline Deployments</p>
+<p>Azure DevOps is going to gives a robust set of features for building and deploying out projects. This will allow us to setup build pipelines that automatically trigger build when developers check in code to the repository. It will allow us to capture a build artifact when then we can deploy it to multiple environments with release pipelines. Let&rsquo;s start by logging into Azure DevOps and creating a new project. I will call my project WebApp. You will need to specify the source repository for you project. We will be using git to store our repository and work item process will be set to agile.</p>
+<p><img src="/img/AzureAppServicePlan/Image7.png" alt="Image7"></p>
+<p>The source files get stored in the repository section of ADO. We are going to want to deploy our code to Azure App service but to do that we need to go to settings and configure our connection to Azure. Click on project settings on the bottom left-hand side of the screen and navigate to &lsquo;Source Settings&rsquo;. Click &lsquo;Create New Service Connection&rsquo; and select &lsquo;Azure Resource Manager&rsquo; then select &lsquo;Service Principle(automatic). Add the Azure Subscription ID and name the service connection &lsquo;Azure Connection&rsquo;. You have an option to scope the Service connection to a resource group but in our case, we will scope to service connection to the entire Azure subscription by leaving the resource group option blank.</p>
+<p><img src="/img/AzureAppServicePlan/Image8.png" alt="Image8"></p>
+<p>Click save to save the service connection settings to azure and navigate to &lsquo;Pipelines&rsquo; then &lsquo;Builds (Pipelines)'. Here we will select our source repository for our web app. We will be using the legacy build pipelines to get started and migrate to YAML. On the bottom of the screen on the builds(pipelines) tab click &lsquo;Use Classic Editor&rsquo;. Keep the default &lsquo;Azure Repos Git&rsquo; and default settings then click continue. Let&rsquo;s use the template for ASP.NET Core app and apply. Now we get a pre-configured build pipelines with a few task. Under the &lsquo;Pipelines&rsquo; section lets choose the Hosted Azure DevOps agent pool. Under &lsquo;Agent Specification&rsquo; choose &lsquo;vs2017-win2016&rsquo;.</p>
+<p><img src="/img/AzureAppServicePlan/Image9.png" alt="Image9"></p>
+<p>There is a few predefined task in the ASP.NET Core build template. First, we are going to run a restore then we will build the solution and test. We do not have tests at this point in time so we can disable that task by right clicking on it and disabling it. Next, we are running a Publish task followed by a publish artifact task. Let&rsquo;s save the build definition and navigate to the &lsquo;Triggers&rsquo; tab on top of the screen. This is where we can set Continuous Integration build triggers CI triggers for short. For example, let&rsquo;s say a developer is working on a feature branch called &lsquo;feature/thisFeatureIsAwesome&rsquo; and they check in code to that feature branch. There will be no automatic builds after the check-in without any CI triggers. The developer adds a CI trigger called &lsquo;featuure/thisFeatureIsAwesome&rsquo; to the build definition. Now when they check in code to that feature branch it will automatically trigger a build for continuous integration. Alternatively, if you have a scheduled time for a build to be run you can set up a CI trigger to run a build at a specific time.</p>
+<p><img src="/img/AzureAppServicePlan/Image10.png" alt="Image10"></p>
+<p>now that the build definition is completed lets created the release definition to upload our code to the Azure App Service. Expand the Pipelines tab in ADO and select releases. Click the option to &lsquo;Create New Release Definition&rsquo; and search for the Azure App Service&rsquo; template. Click on the stage link to edit the tasks running in that stage. On the &lsquo;Stage 1&rsquo; tab we will need to modify some of the parameters. Change the &lsquo;Azure Subscription&rsquo; parameter to point to the Azure Service connection we created earlier. Select the App Service name we would like to deploy to and click on the &lsquo;Deploy Azure App Service&rsquo; task. Here there are a lot of options which we will discuss in another blog but for the purposes of this blog let&rsquo;s keep the default settings.</p>
+<p>Let go back to the Pipeline tab on the top left side of the screen and add a build artifact. Click on the plus sign next to the artifacts on the left-hand side of the screen. Here we want to add the Web App build artifact from the build. Choose the project and source build then keep the default version as &lsquo;Latest&rsquo; Keep the &lsquo;_&rsquo; in the source alias and click &lsquo;Add&rsquo;.</p>
+<p><img src="/img/AzureAppServicePlan/Image11.png" alt="Image11"></p>
+<p>Next to the build artifact there is a &lsquo;Lighting Bolt&rsquo;. If you select that option it will allow you to set Continuous Deployment Triggers, CD triggers for short. This allows the deployment of your web app to be automated when a new build artifact is available. Let, go ahead and enable the CD Trigger for this release definition. Next, we will need to install git if you do not already have it installed.</p>
+<p>Git Download: <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></p>
+<p>Once downloaded we can save our changes in Visual Studio and close it. Let&rsquo;s re-open Visual Studios and open our solution file. On the bottom right-hand side of the screen you will see and option to add source control. There should only be one option which is &lsquo;Git&rsquo;. Select it and a new &lsquo;Team Explorer&rsquo; window will open in VS. Since we have already created a repository in ADO we will expand the &lsquo;Push to Remote Repository&rsquo; option and select &lsquo;Publish Git Repo&rsquo;. There will be an option to enter the repository URL for the existing repository. We need to ADO and navigate to the repository section and grab the Azure Pipelines Git URL. Select the URL under &lsquo;Clone to your computer&rsquo; and paste it into VS. Click the publish button and refresh the ADO repository page. See now the repository has been synchronized with our local repository.</p>
+<p>Almost done, I promise! Let&rsquo;s enable CI on the build definition. Open the Web App build definition and select the triggers tab. Enable the &lsquo;Enable Continuous Integration&rsquo; option and verify the branch filter is set to &lsquo;include&rsquo;:&lsquo;master&rsquo; and save. Let&rsquo;s make a simple change to our web app and commit the changes to the local repository and push those changes to the master branch.</p>
+<p><img src="/img/AzureAppServicePlan/Image12.png" alt="Image12"></p>
+<p>Refresh the ADO build pipelines tab to watch the build get queued, built, and deployed.</p>
+<p>Build Pipeline logs:</p>
+<p><img src="/img/AzureAppServicePlan/Image13.png" alt="Image13"></p>
+<p>Release Pipeline logs:</p>
+<p><img src="/img/AzureAppServicePlan/Image14.png" alt="Image14"></p>
+<p>Now let&rsquo;s log back into Azure and check to see if our App Service was deployed.</p>
+<p>Eureka! We did it!! We have successfully deployed our web app with Azure DevOps full CI/CD pipeline. I hope you enjoyed this blog and will see you in the next one.</p>
+<p>Upcoming:</p>
+<ul>
+<li>Scaling up/down App Service Plans</li>
+<li>Optimizing App Service Plan</li>
+<li>Monitoring App Service Plans</li>
+<li>Converting GUI build definition in YAML</li>
+</ul>
+<p>Notes:</p>
+<ul>
+<li>You can access the KUDO site by inserting &lsquo;scm&rsquo; between the App Service name and azure website prefix.</li>
+<li>You can have multiple CI/CD triggers for each build and release definition.</li>
+<li>Depending on the repository branching strategies you use the * symbol allows for any build or release to automatically deploy builds/releases. For example:
+<ul>
+<li>release/* - This will trigger any builds/releases off the release branch.</li>
+<li>feature/* - This will trigger any builds/release off the feature branch.</li>
+</ul>
+</li>
+<li>You can exclude branches from being automatically built by using the &lsquo;Exclude&rsquo; option.</li>
+<li>If you want to convert this GUI build definition into YAML, you will need to create an &lsquo;azure-pipelines.yml&rsquo; file and place it into the root directory of your repository. To copy the YAML syntax over to the YAML file you will need to open the build/release definition and select the &lsquo;View YAML&rsquo; option. Copy the YAML syntax over to the YAML build definition and perform an &lsquo;initial commit&rsquo;. Verify a build has been queued an you are done. There is alot more you need to know about converting GUI based build definitions but we will talk about that in a later blog.</li>
+</ul>
+<p>References:</p>
+<ul>
+<li><a href="https://app.pluralsight.com/profile/author/neil-morrissey">https://app.pluralsight.com/profile/author/neil-morrissey</a></li>
+</ul>
+]]></content>
 		</item>
 		
 	</channel>
