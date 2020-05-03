@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Azure on Jared Clark</title>
-    <link>https://jaredclark0626.github.io/tags/azure/</link>
-    <description>Recent content in Azure on Jared Clark</description>
+    <title>App Service on Jared Clark</title>
+    <link>https://jaredclark0626.github.io/tags/app-service/</link>
+    <description>Recent content in App Service on Jared Clark</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Sun, 26 Apr 2020 08:32:52 -0400</lastBuildDate>
     
-	<atom:link href="https://jaredclark0626.github.io/tags/azure/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jaredclark0626.github.io/tags/app-service/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -21,16 +21,6 @@
       <description>Short-hand:
  ASE - App Service Environment  This will be a short blog since I will be only giving a brief overview of scaling up and down App Service plans. We will talk about how to scale up and down app service plans manually and automate scaling depending on workload. First, I want to give you a general overview of scaling up and down app services.
 Overview of Scaling Up and Down App Service Plans</description>
-    </item>
-    
-    <item>
-      <title>Creating and deploying Microsoft Azure App Service Plan</title>
-      <link>https://jaredclark0626.github.io/posts/managing-microsoft-azure-app-service-plan/</link>
-      <pubDate>Fri, 17 Apr 2020 10:02:17 -0400</pubDate>
-      
-      <guid>https://jaredclark0626.github.io/posts/managing-microsoft-azure-app-service-plan/</guid>
-      <description>Short-hand:
- Azure DevOps - ADO Continuous Deployment - CD Continuous Integration - CI VS - Visual Studio  In this blog I will give you an overview of Microsoft App Service plans, how to create and app Service Plan and finally how to create an App Service. We will talk about options on how to deploy code to App Services. To kick this off let me give you an overview of Microsoft App Service Plan.</description>
     </item>
     
   </channel>

@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Fri, 17 Apr 2020 10:02:17 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2020 08:32:52 -0400</lastBuildDate>
     
 	<atom:link href="https://jaredclark0626.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Scaling Up and Down App Service Plans</title>
+      <link>https://jaredclark0626.github.io/posts/scaling-up-and-down-app-service-plans/</link>
+      <pubDate>Sun, 26 Apr 2020 08:32:52 -0400</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/posts/scaling-up-and-down-app-service-plans/</guid>
+      <description>Short-hand:
+ ASE - App Service Environment  This will be a short blog since I will be only giving a brief overview of scaling up and down App Service plans. We will talk about how to scale up and down app service plans manually and automate scaling depending on workload. First, I want to give you a general overview of scaling up and down app services.
+Overview of Scaling Up and Down App Service Plans</description>
+    </item>
     
     <item>
       <title>Creating and deploying Microsoft Azure App Service Plan</title>

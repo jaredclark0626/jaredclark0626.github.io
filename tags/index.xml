@@ -7,17 +7,44 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Fri, 17 Apr 2020 10:02:17 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2020 08:32:52 -0400</lastBuildDate>
     
 	<atom:link href="https://jaredclark0626.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>App Service</title>
+      <link>https://jaredclark0626.github.io/tags/app-service/</link>
+      <pubDate>Sun, 26 Apr 2020 08:32:52 -0400</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/tags/app-service/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>App Service Plans</title>
+      <link>https://jaredclark0626.github.io/tags/app-service-plans/</link>
+      <pubDate>Sun, 26 Apr 2020 08:32:52 -0400</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/tags/app-service-plans/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Azure</title>
       <link>https://jaredclark0626.github.io/tags/azure/</link>
-      <pubDate>Fri, 17 Apr 2020 10:02:17 -0400</pubDate>
+      <pubDate>Sun, 26 Apr 2020 08:32:52 -0400</pubDate>
       
       <guid>https://jaredclark0626.github.io/tags/azure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scaling Up and Down</title>
+      <link>https://jaredclark0626.github.io/tags/scaling-up-and-down/</link>
+      <pubDate>Sun, 26 Apr 2020 08:32:52 -0400</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/tags/scaling-up-and-down/</guid>
       <description></description>
     </item>
     

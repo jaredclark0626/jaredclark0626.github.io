@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Scaling Up and Down App Service Plans">
+<meta itemprop="description" content="Short-hand:
+ ASE - App Service Environment  This will be a short blog since I will be only giving a brief overview of scaling up and down App Service plans. We will talk about how to scale up and down app service plans manually and automate scaling depending on workload. First, I want to give you a general overview of scaling up and down app services.
+Overview of Scaling Up and Down App Service Plans">
+<meta itemprop="datePublished" content="2020-04-26T08:32:52-04:00" />
+<meta itemprop="dateModified" content="2020-04-26T08:32:52-04:00" />
+<meta itemprop="wordCount" content="2030">
+
+
+
+<meta itemprop="keywords" content="App Service Plans,App Service,Azure,Scaling Up and Down," /><meta property="og:title" content="Scaling Up and Down App Service Plans" />
+<meta property="og:description" content="Short-hand:
+ ASE - App Service Environment  This will be a short blog since I will be only giving a brief overview of scaling up and down App Service plans. We will talk about how to scale up and down app service plans manually and automate scaling depending on workload. First, I want to give you a general overview of scaling up and down app services.
+Overview of Scaling Up and Down App Service Plans" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jaredclark0626.github.io/posts/scaling-up-and-down-app-service-plans/" />
+<meta property="article:published_time" content="2020-04-26T08:32:52-04:00" />
+<meta property="article:modified_time" content="2020-04-26T08:32:52-04:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Scaling Up and Down App Service Plans"/>
+<meta name="twitter:description" content="Short-hand:
+ ASE - App Service Environment  This will be a short blog since I will be only giving a brief overview of scaling up and down App Service plans. We will talk about how to scale up and down app service plans manually and automate scaling depending on workload. First, I want to give you a general overview of scaling up and down app services.
+Overview of Scaling Up and Down App Service Plans"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Scaling Up and Down App Service Plans</title>
+	<link rel="stylesheet" href="https://jaredclark0626.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://jaredclark0626.github.io/">Jared Clark</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://jaredclark0626.github.io/posts/">Posts</a>
+				<a href="https://jaredclark0626.github.io/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://www.linkedin.com/in/jared-clark-549a0435/" target="_blank" rel="noopener me" title="Linkedin"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://stackoverflow.com/users/11244191/jclark0909" target="_blank" rel="noopener me" title="Stackoverflow"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.913 16.041v6.848h17.599v-6.848M7.16 18.696h8.925M7.65 13.937l8.675 1.8M9.214 9.124l8.058 3.758M12.086 4.65l6.849 5.66M15.774 1.111l5.313 7.162"/></svg></a><a href="https://github.com/jaredclark0626" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a><a href="https://www.facebook.com/jared.clark.393" target="_blank" rel="noopener me" title="Facebook"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://jaredclark0626.github.io/posts/">Posts</a></li>
+			<li><a href="https://jaredclark0626.github.io/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Apr 26, 2020</span></div>
+				<h1>Scaling Up and Down App Service Plans</h1>
+			</header>
+			<div class="content">
+				<p>Short-hand:</p>
+<ul>
+<li>ASE - App Service Environment</li>
+</ul>
+<p>This will be a short blog since I will be only giving a brief overview of scaling up and down App Service plans. We will talk about how to scale up and down app service plans manually and automate scaling depending on workload. First, I want to give you a general overview of scaling up and down app services.</p>
+<p>Overview of Scaling Up and Down App Service Plans</p>
+<p><img src="/img/ScalingUpDownAppServicePlan/image1.png" alt="Image1"></p>
+<p>Scaling up also referred to as vertical scaling is tied to the Azure tier level you have set on your App Service Plan. Scaling up cost more because we are adding more compute resources such as CPU and Memory for our App Services to run on. There is an option to scale up to an isolated network (ASE) but keep in mind you Apps Services Plan can become costly. Another reason to scale up would be Azure adds more features to your App Service Plan as you scale up. Higher plans equels more features unlocked for your App Service Plan. One of the mmost important features would be deployment slots which is available at the Standard pricing teir.</p>
+<p>Azure Deployment slots are actually live app with their own hostname. The main reason for deployment slots in an App Service Plan is to have multiple environments for development teams to deploy to such as the following.</p>
+<ul>
+<li>
+<p>Dev Environment</p>
+</li>
+<li>
+<p>QA Environment</p>
+</li>
+<li>
+<p>UAT Environment</p>
+</li>
+<li>
+<p>Production Environment</p>
+</li>
+<li>
+<p>Canary Ring Environment</p>
+</li>
+</ul>
+<p>This allows development teams working on different features to deploy to specific environments at the same time. Additionally, this allows for deployment slots developers can validate app changes in DEV and QA environments before swapping the feature into production.</p>
+<p>App Service Plan also define the maximum number of instances you can have so you might scale up to the premium plan just so you can scale out. There are quotas for each tier for App Service Plan which is linked below.</p>
+<p>Azure App Service Plan Tiers Link: <a href="https://azure.microsoft.com/en-us/pricing/details/app-service/windows/">https://azure.microsoft.com/en-us/pricing/details/app-service/windows/</a></p>
+<p>If you reach the bandwidth limits on free or shared App Service Plan tiers your app will receive a 403 error. You will either have to wait until the quota resets or upgrade you App Service Plan. Essentially what is happening when you upgrade your App Service plan is the VMs(instances) your app is running on gets upgraded to bigger VMs with more compute resources. Scaling up can take anywhere between a few seconds and up to five minutes to complete. This is all dependent on which tier you are upgrading to and the workload running on you App Service Plan.</p>
+<p>In terms of scaling up I would start at the lowest tier possible and scale up as needed. This means continuous monitoring of your App Service plan which we will talk about in an upcoming blog. When scaling up we want to think about maintenance windows during this time since the apps and jobs running on those can stop and be re-done when the scaling up process is completed. This means our jobs that we create for our app will need to be intelligent enough to know when a scale up is about to occur and gracefully shutdown before scale up begins.</p>
+<p>To see if you have reached your storage quota on you App Service Plan tier you can log into Azure and open the App Service Plan. Navigate to the &lsquo;File System Storage&rsquo;, here you can see the threshold and usage of the storage your App Service plan has consumed.</p>
+<p><img src="/img/ScalingUpDownAppServicePlan/image3.png" alt="Image3"></p>
+<p>Keep in mind that is the quota for the App Service Plan not the App Service running on that plan. To explicitly look at the storage quota for the App Service you will need to click on the App tab in the App Service plan page and select your app. Once you have selected your app, you can navigate to the quotas tab which is where you will see the Storage (File system usage) for that specific app.</p>
+<p><img src="/img/ScalingUpDownAppServicePlan/image4.png" alt="Image4"></p>
+<p>This page shows your resources quotas, what has been used, and when the quota resets. This is helpful when you are trying to determine when it is time to scale up to a new tier.</p>
+<p>Scaling Up App Service Plan</p>
+<p>Navigate to your App Service Plan that you would like to scale up and select the &lsquo;Scale up (App Service Plan) tab. Here you will have the options to scale up or down your App Service Plan. Keep in mind when you scale down you App Service Plan you may lose features available at that tier. We are going to scale up to the &lsquo;Shared Infrastructure&rsquo; tier under the &lsquo;Dev/Test&rsquo; tab. This will give us more compute time (240 minutes per day). Select the D1 pricing tier and click apply.</p>
+<p><img src="/img/ScalingUpDownAppServicePlan/image5.png" alt="Image5"></p>
+<p>Keep in mind scaling up or down may take some time depending on the workload you have running on your apps running on the App Service Plan. Now let&rsquo;s scale back down to the F1 pricing tier. Select F1 tier and click apply. It&rsquo;s as simple as that when scaling up and down your App Service Plans. Now let&rsquo;s talk about scaling out App Service Plans and something really cool, auto-scaling!</p>
+<p>Overview of Scaling Out and Auto-scaling App Service Plans</p>
+<p><img src="/img/ScalingUpDownAppServicePlan/image2.png" alt="Image2"></p>
+<p>Scaling out App Service Plans is defined as adding more instances (VMs) to your app Service Plan. Instead of adding more compute resources to your App Service plan we are adding more instances (VMs). Scaling out is allows referred to Horizontal Scaling. The maximum number of instances you can have on an App Service Plan is 100 instances which is available on the Isolated (ASE) tier. If you need more instances allocated to an App Service Plan you can call Microsoft support or submit a support ticket.</p>
+<p>Auto-scaling allows your App Service Plan to have the right amount of resources available to run and handling workloads running on your apps. It allows you to provision and de-provision VMs and resources depending on the workload running on your app. You specify a maximum and minimum number or instances to add or remove automatically depending on demand. This allows for natural growth of your App Service Plan and saves you money in the long run. For example, let&rsquo;s say you have a web app that sees high traffic from 9AM to 1PM by configuring auto-scaling your web app will have enough resources to handle that workload during those times. Since the web app scales out during those hours your end users are happy because they are not staring at loading screens. We all know what that means happy customers equals more money.</p>
+<p>We can set up auto-scaling based on metrics such as CPU usage, Memory usage, Disk queue length, Ingress/egress data, and application insights. Additionally, like mentioned above in the example we can auto-scale based on a time-frame or date we configure. We can also set up auto-scaling to send us a message when the App Service plan is scaling. Keep in mind when scaling out all your web apps are running on each provisioned instance (VMs) which means if you have a non-busy web app running on the same App Service plan as busy apps they will be provisioned too. We can configure specific web apps to be provisioned based on auto-scaling (Per-App Auto-scaling) but that is an advanced topic that we will not discuss in this blog.</p>
+<p>When designing application, we want to design them stateless to take advantage of auto-scaling. We can run into an issue referred to as session-affinity which means a user session will continue sending requests to a specific instance (VMs) even after auto-scaling. We can configure the a load balancer to route the users requests to different instances in the que to help Combate session-affinity. Another thing to note is the auto-scaling feature is only available at the standard level pricing tier. There are several options on how to configure auto-scaling which are listed below.</p>
+<ul>
+<li>
+<p>Azure Portal</p>
+</li>
+<li>
+<p>Azure CLI</p>
+</li>
+<li>
+<p>Azure ARM Templates</p>
+</li>
+<li>
+<p>PowerShell</p>
+</li>
+<li>
+<p>Azure REST API</p>
+</li>
+</ul>
+<p>Setting up Auto-scaling App Service Plan</p>
+<p>Navigate to your App Service Plan and click on the &lsquo;Scale out (App Service Plan)&rsquo; tab. Here you will have an option to perform a manual scale out of a custom auto-scale. If you want to perform a manual scale out, select that option and change the &lsquo;Instance count&rsquo; to how many instances (VMs) you would like to scale-out. Alternatively, we can enable auto-scaling. By selecting that option, a set of parameters will appear to set up an auto-scaling condition. We can keep the default name and the default resource group.</p>
+<p>There are two options for the &lsquo;Scale Mode&rsquo;, one being &lsquo;Scale based on metric&rsquo; and another being &lsquo;Scale to a specific instance count&rsquo;. We can scale up and add another instance by choosing the &lsquo;Scale to a specific instance count&rsquo; then setting the &lsquo;Instance count&rsquo; to 1. We can add multiple auto-scale condition by clicking the &lsquo;Add a scale condition&rsquo; link. Let&rsquo;s select the &lsquo;Scale based on metric&rsquo; option and set our min and max instance (VM) limits. There is a default parameter that is set to 1 which indicates that at all time there will always be 1 instance online and available. There is an option to tie a schedule to the auto-scaling condition as well. In our case we will set it between 6 AM and 6 PM.</p>
+<p>Under &lsquo;Rules&rsquo; lets add a rule that the condition will ad-hear to. A new window will open on the right-hand side of the screen. The &lsquo;Metric resource&rsquo; option refers to the resource we would like this condition to be applied too. In our case we will keep it set to &lsquo;Current resource&rsquo; and page down to the &lsquo;Actions&rsquo; section. The &lsquo;Operation&rsquo; we will set will be &lsquo;Increase count by&rsquo; and we want to set the &lsquo;Instance count&rsquo; equal to 1. The &lsquo;Cool down&rsquo; option refers to the amount of time after the condition has been met where the scale out condition will not be evaluated. We will set the &lsquo;Cool down&rsquo; to 5 minutes, which means for 5 minutes after we scale out to another instance the condition will be disabled. The &lsquo;Criteria&rsquo; section refers to what metrics have to be met to scale out our App Service Plan. The &lsquo;Criteria&rsquo; section can change depending on the scope we set at the &lsquo;Metric resource&rsquo; level of the condition. We will set the &lsquo;Time aggregation&rsquo; to average and keep the &lsquo;Metric namespace&rsquo; set to default (App Service Plan Standard Metrics). For the &lsquo;Metric name&rsquo; we will keep the default &lsquo;CPU percentage&rsquo;. Please note the &lsquo;1-minute time grain&rsquo; label under &lsquo;Metric name&rsquo; drop down, this refers to the average over a minute time-span. So, the condition evaluates the average CPU percentage of 1 minute.</p>
+<p>For the &lsquo;operator&rsquo; we will set it equal to &lsquo;Greater than&rsquo; and the &lsquo;Metric Threshold to trigger scale action&rsquo; set to 70%. The &lsquo;Duration&rsquo; parameter we will set to 10 minutes. Now if the average 1-minute time space is greater than 70% for 10 minutes then this scale out condition will be met. We do have an option to set the &lsquo;Time grain statistic&rsquo; to another option but we will keep it at average. Click &lsquo;Add&rsquo; at the bottom of the screen to add the scale rule.</p>
+<p><img src="/img/ScalingUpDownAppServicePlan/image6.png" alt="Image6"></p>
+<p>There is a recommended option to add a &lsquo;Scale in&rsquo; rule set so the app service plan can scale back in to its original size. This is recommended because if that scale in rule is not set the app service plan will just scale out and stay at the size. We are not going to set that rule due to the scope of this demo but you can add a scale in rule by click on the recommended rule.</p>
+<p>We talked about the b scaling up and down App Service plans. We also talked about how to scale up and down app service plans manually and how to set auto-scaling conditions. This is a great resource you can utilize when build out your app service plans which in the long run will save you money and make your customers happy.</p>
+<p>Upcoming:</p>
+<ul>
+<li>
+<p>Optimizing App Service Plan</p>
+</li>
+<li>
+<p>Monitoring App Service Plans</p>
+</li>
+<li>
+<p>Converting GUI build definition in YAML</p>
+</li>
+</ul>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://jaredclark0626.github.io/tags/app-service-plans">App Service Plans</a></span><span class="tag"><a href="https://jaredclark0626.github.io/tags/app-service">App Service</a></span><span class="tag"><a href="https://jaredclark0626.github.io/tags/azure">Azure</a></span><span class="tag"><a href="https://jaredclark0626.github.io/tags/scaling-up-and-down">Scaling Up and Down</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2030 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-26 08:32 -0400</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://jaredclark0626.github.io/posts/managing-microsoft-azure-app-service-plan/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Creating and deploying Microsoft Azure App Service Plan</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://jaredclark0626.github.io/">Jared Clark</a></p>
+		<p>
+			 &#183; <a href="https://jaredclark0626.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://jaredclark0626.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>
