@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://jaredclark0626.github.io/</loc>
+    <lastmod>2020-05-03T11:36:43-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredclark0626.github.io/posts/optimizing-app-service-delivery-azurecdn/</loc>
+    <lastmod>2020-05-03T11:36:43-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredclark0626.github.io/posts/</loc>
+    <lastmod>2020-05-03T11:36:43-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://jaredclark0626.github.io/tags/app-service/</loc>
     <lastmod>2020-04-26T08:32:52-04:00</lastmod>
   </url>
@@ -14,16 +29,6 @@
   
   <url>
     <loc>https://jaredclark0626.github.io/tags/azure/</loc>
-    <lastmod>2020-04-26T08:32:52-04:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jaredclark0626.github.io/</loc>
-    <lastmod>2020-04-26T08:32:52-04:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jaredclark0626.github.io/posts/</loc>
     <lastmod>2020-04-26T08:32:52-04:00</lastmod>
   </url>
   

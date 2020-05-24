@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Optimizing App Service Delivery Azure CDN">
+<meta itemprop="description" content="tags:
+ App Service Plans App Service Azure Optimizing   Short-hand:
+  Azure CDN - Azure Content Delivery Network
+  AS - App Service
+  ASP - App Service Plan
+  Optimizing App Service using Azure CDN
+In this short blog we will talk about optimizing the content delivery to an App Service using Azure Content Delivery Network. This will help us delivery updated versions of our code to Azure CDN to different regions around the world.">
+<meta itemprop="datePublished" content="2020-05-03T11:36:43-04:00" />
+<meta itemprop="dateModified" content="2020-05-03T11:36:43-04:00" />
+<meta itemprop="wordCount" content="1617">
+
+
+
+<meta itemprop="keywords" content="" /><meta property="og:title" content="Optimizing App Service Delivery Azure CDN" />
+<meta property="og:description" content="tags:
+ App Service Plans App Service Azure Optimizing   Short-hand:
+  Azure CDN - Azure Content Delivery Network
+  AS - App Service
+  ASP - App Service Plan
+  Optimizing App Service using Azure CDN
+In this short blog we will talk about optimizing the content delivery to an App Service using Azure Content Delivery Network. This will help us delivery updated versions of our code to Azure CDN to different regions around the world." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jaredclark0626.github.io/posts/optimizing-app-service-delivery-azurecdn/" />
+<meta property="article:published_time" content="2020-05-03T11:36:43-04:00" />
+<meta property="article:modified_time" content="2020-05-03T11:36:43-04:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Optimizing App Service Delivery Azure CDN"/>
+<meta name="twitter:description" content="tags:
+ App Service Plans App Service Azure Optimizing   Short-hand:
+  Azure CDN - Azure Content Delivery Network
+  AS - App Service
+  ASP - App Service Plan
+  Optimizing App Service using Azure CDN
+In this short blog we will talk about optimizing the content delivery to an App Service using Azure Content Delivery Network. This will help us delivery updated versions of our code to Azure CDN to different regions around the world."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Optimizing App Service Delivery Azure CDN</title>
+	<link rel="stylesheet" href="https://jaredclark0626.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://jaredclark0626.github.io/">Jared Clark</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://jaredclark0626.github.io/posts/">Posts</a>
+				<a href="https://jaredclark0626.github.io/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://www.linkedin.com/in/jared-clark-549a0435/" target="_blank" rel="noopener me" title="Linkedin"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://stackoverflow.com/users/11244191/jclark0909" target="_blank" rel="noopener me" title="Stackoverflow"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.913 16.041v6.848h17.599v-6.848M7.16 18.696h8.925M7.65 13.937l8.675 1.8M9.214 9.124l8.058 3.758M12.086 4.65l6.849 5.66M15.774 1.111l5.313 7.162"/></svg></a><a href="https://github.com/jaredclark0626" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a><a href="https://www.facebook.com/jared.clark.393" target="_blank" rel="noopener me" title="Facebook"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://jaredclark0626.github.io/posts/">Posts</a></li>
+			<li><a href="https://jaredclark0626.github.io/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>May 3, 2020</span></div>
+				<h1>Optimizing App Service Delivery Azure CDN</h1>
+			</header>
+			<div class="content">
+				<p>tags:</p>
+<ul>
+<li>App Service Plans</li>
+<li>App Service</li>
+<li>Azure</li>
+<li>Optimizing</li>
+</ul>
+<hr>
+<p>Short-hand:</p>
+<ul>
+<li>
+<p>Azure CDN - Azure Content Delivery Network</p>
+</li>
+<li>
+<p>AS - App Service</p>
+</li>
+<li>
+<p>ASP - App Service Plan</p>
+</li>
+</ul>
+<p>Optimizing App Service using Azure CDN</p>
+<p>In this short blog we will talk about optimizing the content delivery to an App Service using Azure Content Delivery Network. This will help us delivery updated versions of our code to Azure CDN to different regions around the world. Instead of delivering our code to a specific region in Azure we will distribute our code to multiple regions in Azure using Azure CDN. This allows users from all over the world to quickly access our App. We will also talk about creating a CDN profile/endpoints, configuring caching rules, Dynamic Site Acceleration and Azure CDN App Service auto-scaling.</p>
+<p>Overview of Azure CDN</p>
+<p>Azure CDN is a distributed network of servers all over the world. These servers store cached data for you content which minimizes latency to users all over the world. The Azure CDN offloads traffic from the source server which typically store static data such as HTML files, photos, videos, etc. Azure CDN can store dynamic data as well which is known as Dynamic Site Acceleration. We will talk more about dynamic site Acceleration later in this blog.</p>
+<p><img src="/img/OptimizingAppServiceDeliveryAzureCDN/image1.png" alt="Image1"></p>
+<p>At a high level you have an origin server which is typically an Azure App Server, Web App, Blob storage, or Azure Media Services. This origin server stores you content which is then cached over to the Azure CDN server. When making updates to your origin, those updated files get cached to the Azure CDN server. The Azure CDN servers are also known as &lsquo;Edge Servers&rsquo;, these servers are spread out throughout the world. There is something know as &lsquo;Point-of-presence (POP) locations which are located in Azure CDN regions. There are more POP locations then Azure data centers.</p>
+<p>Here is an example of how data is received for a user using Azure CDN. The user (located in India) goes to our site &lsquo;<a href="https://AwesomeSite.azureedge.net">https://AwesomeSite.azureedge.net</a>&rsquo; which is known as an endpoint. That endpoint points to an edge server that is located closest to the user&rsquo;s location. That edge server then reaches out to the origin server point pull content and cache it on the specified edge server.</p>
+<p><img src="/img/OptimizingAppServiceDeliveryAzureCDN/image2.png" alt="Image2"></p>
+<p>There is a setting called &lsquo;Time to live&rsquo; that setting by default is set to 7 days. That setting refers to how long the cached data from the origin server will live on the edge server. If updates are made to the origin server then a purge of the cached data on the edge server will need to be done. You can purge all data on the edge server or you can purge a specific subset of data. Azure CDN is made up of profiles and endpoints. An endpoint is essentially a URL which points to an App Service, Web App, Blob storage, etc. By default, azure CDN endpoints are prefixed with &lsquo;azureedge.net&rsquo;. You can configure an endpoint to point to a custom domain name. A CDN Profile is a collection of endpoints and azure prices at the profile level. Azure CDN features are defined by which provider you choose and which pricing tier.</p>
+<p>Link to Azure CDN Pricing Tiers: <a href="https://azure.microsoft.com/en-us/pricing/details/cdn/">https://azure.microsoft.com/en-us/pricing/details/cdn/</a></p>
+<p>Creating Azure CDN Profile and Endpoint</p>
+<p>For this demo we will be using an existing Azure App Service to configure to an Azure CDN profile/endpoint. Navigate to your app service or content that you would like to configure to an Azure CDN profile/endpoint. On the left-hand side of the screen choose the &lsquo;Networking&rsquo; tab then click on the &lsquo;Configure Azure CDN for your app&rsquo; link. Here you will see an option to create and Azure endpoint. But wait, we need to create an Azure profile before creating an Azure endpoint since Profiles are a collection of endpoints. In the azure portal search for &lsquo;CDN&rsquo; and select the &lsquo;CDN&rsquo; button and click create. This opens a page to create a CDN profile which we need in order to tie our App Service endpoints to a CDN.</p>
+<p>When creating a CDN profile you will need to create or use an existing resource group, specify a region to store the resource group and a pricing tier. In our case we will use the Version pricing tier so we can configure Dynamic Site Acceleration.</p>
+<p><img src="/img/OptimizingAppServiceDeliveryAzureCDN/image3.png" alt="Image3"></p>
+<p>Once the CDN profile is created, let&rsquo;s open it and add an endpoint to our App Service. Click on the plus sign on top of the screen to add an endpoint. Name your endpoint but keep in mind that it will be prefixed with &lsquo;azureedge.net&rsquo; Next, we will choose our origin type, which in our case we are deploying a web app to the Azure CDN so we will choose the &lsquo;Web App&rsquo; option. The Origin hostname is tied to the URL that we are currently using to access our Web App. This should auto-populate with the origin hostname tied to your existing web app. Since we are deploying the entire web app to the CDN we will leave the origin path blank so it uploads the root directory. The origin host header should be the same as the origin hostname. Next, we can define which ports to send the data over from the origin server to the Azure Edge servers. In our case we will keep the default port 80 for http traffic and 443 for https traffic. Lastly, we will choose the &lsquo;General Web delivery&rsquo; option for the &lsquo;Optimized for&rsquo; option.</p>
+<p><img src="/img/OptimizingAppServiceDeliveryAzureCDN/image4.png" alt="Image4"></p>
+<p>Now it I hit the endpoint URL &lsquo;<a href="https://jcwebapp.azureedge.net/'">https://jcwebapp.azureedge.net/'</a> it points to the web app source server!</p>
+<p>Setting up Azure CDN Caching</p>
+<p>If you open your content that you are uploading to the CDN which in our case is an Azure Web App and then navigate to the networking tab. Choose the &lsquo;Configure Azure CDN for your app link&rsquo; which opens a new page. Click on the endpoint we just configured and then select the &lsquo;Caching rules&rsquo; tab. By default, the caching settings are set to 7 days. Under &lsquo;Caching behavior&rsquo; we have a few option listed below:</p>
+<ul>
+<li>
+<p>Not set - Inherits default caching settings</p>
+</li>
+<li>
+<p>Bypass Cache - Ignores caching settings all together.</p>
+</li>
+<li>
+<p>Override - Overrides the default caching settings.</p>
+</li>
+<li>
+<p>Set if missing - Will inherit any caching setting set on origin server (Web App).</p>
+</li>
+</ul>
+<p>Let select the &lsquo;Override&rsquo; option and then change the &lsquo;Caching expiration duration&rsquo;'Query string caching behavior&rsquo; settings what is listed below:</p>
+<p><img src="/img/OptimizingAppServiceDeliveryAzureCDN/image5.png" alt="Image5"></p>
+<p>There is a few options for the &lsquo;Query string caching behavior setting&rsquo; which are defined below:</p>
+<ul>
+<li>
+<p>Ignore query strings - This will request the first query string from the origin server to the edge server but will ignore any other requests that come throw with the same query string.</p>
+</li>
+<li>
+<p>Bypass caching for query strings - This will request the query string from the origin server to the edge server each time a request comes in. This will ignore caching all together.</p>
+</li>
+<li>
+<p>Caching every unique URL - When a unique query string that is requested from the user will be cached from the origin server to the edge server.</p>
+</li>
+</ul>
+<p>Under custom caching settings we can setup specific caching rules for specific file paths or file extensions. I am going to specify a specific path that I want to ignore caching on. This will allow the user to pull the most recent files from a specific path on my Web App each time a request comes through. Essentially, this is sending a request directly to the origin server each time when a specific path is called.</p>
+<p>Let save the settings but keep in mind some of these settings will not propagate for 90 minutes. This is the issue when testing these setting because it will take time for those settings to be updated.</p>
+<p>Purging Cache</p>
+<p>Navigate to the Azure CDN setting for your content that you are sharing. On the top of the screen click on the purge button. Here we can purge the data stored on the edge server. In our case we updated an image and uploaded it to the origin server but the edge server still has the old image cached. We will choose the predefined endpoint pointing to our origin server and clear the images path.</p>
+<p><img src="/img/OptimizingAppServiceDeliveryAzureCDN/image6.png" alt="Image6"></p>
+<p>There is a maximum 50 limit request for each purge. The purge usually takes around 2-3 minutes but that is dependent on how much content we are purging on the edge server. We have been talking mainly about static data but in this next section we will talk about dynamic data with Dynamic Site Acceleration but will not configure it in Azure.</p>
+<p>Dynamic Site Acceleration</p>
+<p>Dynamic data in response to user&rsquo;s requests or behavior. This allows the users request to change the data that is being retrieved from the origin server on demand. Dynamic Site Acceleration is only offered on specific pricing tiers listed below:</p>
+<ul>
+<li>
+<p>Version Standard</p>
+</li>
+<li>
+<p>Version Premium</p>
+</li>
+<li>
+<p>Akamai</p>
+</li>
+</ul>
+<p>Dynamic Site Acceleration has two approaches.</p>
+<ul>
+<li>
+<p>Rout Optimization - This finds the fastest route from the edge servers to the origin servers. This compares routes from POP locations and finds the most optimized route to retrieve data to the end user.</p>
+</li>
+<li>
+<p>TCP Optimization - This is an algorithm that prevents network congestion. This limits the data sent over internet until packets are lost.</p>
+</li>
+</ul>
+<p>To configure Dynamic Site Acceleration, we will need to upload a probe file. Caching is turned off by default for Dynamic Site Acceleration, however, we can turn it on for specific file paths.</p>
+<p>We have talked how Azure CDN works and how to create profiles that store endpoints to point to content origin servers. For the last blog in this series we will talk about how to monitor and diagnose issue with App Service plans in Azure.</p>
+<p>Until next time! Cheers!</p>
+<p>Jared Clark</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1617 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-05-03 11:36 -0400</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://jaredclark0626.github.io/posts/scaling-up-and-down-app-service-plans/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Scaling Up and Down App Service Plans</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://jaredclark0626.github.io/">Jared Clark</a></p>
+		<p>
+			 &#183; <a href="https://jaredclark0626.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://jaredclark0626.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

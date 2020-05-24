@@ -7,10 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 26 Apr 2020 08:32:52 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 03 May 2020 11:36:43 -0400</lastBuildDate>
     
 	<atom:link href="https://jaredclark0626.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Optimizing App Service Delivery Azure CDN</title>
+      <link>https://jaredclark0626.github.io/posts/optimizing-app-service-delivery-azurecdn/</link>
+      <pubDate>Sun, 03 May 2020 11:36:43 -0400</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/posts/optimizing-app-service-delivery-azurecdn/</guid>
+      <description>tags:
+ App Service Plans App Service Azure Optimizing   Short-hand:
+  Azure CDN - Azure Content Delivery Network
+  AS - App Service
+  ASP - App Service Plan
+  Optimizing App Service using Azure CDN
+In this short blog we will talk about optimizing the content delivery to an App Service using Azure Content Delivery Network. This will help us delivery updated versions of our code to Azure CDN to different regions around the world.</description>
+    </item>
     
     <item>
       <title>Scaling Up and Down App Service Plans</title>
