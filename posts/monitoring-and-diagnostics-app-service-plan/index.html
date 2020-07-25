@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Monitoring And Diagnostics App Service Plan">
+<meta itemprop="description" content="tags:
+ App Service Plans App Service Azure Monitoring Diagnostics   Short-hand:
+ AS - App Service ASP - App Service Plan  This will be the last blog in this series for Managing Azure App Services plans. In this blog I will give you an overview on monitoring and diagnostics for App Service plan. We will cover enabling logging, configuring logging, monitoring metrics and Application insights. Now let&rsquo;s get into an overview of Monitoring and Diagnostics for App Service Plans.">
+<meta itemprop="datePublished" content="2020-05-25T10:34:37-04:00" />
+<meta itemprop="dateModified" content="2020-05-25T10:34:37-04:00" />
+<meta itemprop="wordCount" content="1995">
+
+
+
+<meta itemprop="keywords" content="" /><meta property="og:title" content="Monitoring And Diagnostics App Service Plan" />
+<meta property="og:description" content="tags:
+ App Service Plans App Service Azure Monitoring Diagnostics   Short-hand:
+ AS - App Service ASP - App Service Plan  This will be the last blog in this series for Managing Azure App Services plans. In this blog I will give you an overview on monitoring and diagnostics for App Service plan. We will cover enabling logging, configuring logging, monitoring metrics and Application insights. Now let&rsquo;s get into an overview of Monitoring and Diagnostics for App Service Plans." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jaredclark0626.github.io/posts/monitoring-and-diagnostics-app-service-plan/" />
+<meta property="article:published_time" content="2020-05-25T10:34:37-04:00" />
+<meta property="article:modified_time" content="2020-05-25T10:34:37-04:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Monitoring And Diagnostics App Service Plan"/>
+<meta name="twitter:description" content="tags:
+ App Service Plans App Service Azure Monitoring Diagnostics   Short-hand:
+ AS - App Service ASP - App Service Plan  This will be the last blog in this series for Managing Azure App Services plans. In this blog I will give you an overview on monitoring and diagnostics for App Service plan. We will cover enabling logging, configuring logging, monitoring metrics and Application insights. Now let&rsquo;s get into an overview of Monitoring and Diagnostics for App Service Plans."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Monitoring And Diagnostics App Service Plan</title>
+	<link rel="stylesheet" href="https://jaredclark0626.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://jaredclark0626.github.io/">Jared Clark</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://jaredclark0626.github.io/posts/">Posts</a>
+				<a href="https://jaredclark0626.github.io/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://www.linkedin.com/in/jared-clark-549a0435/" target="_blank" rel="noopener me" title="Linkedin"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://stackoverflow.com/users/11244191/jclark0909" target="_blank" rel="noopener me" title="Stackoverflow"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.913 16.041v6.848h17.599v-6.848M7.16 18.696h8.925M7.65 13.937l8.675 1.8M9.214 9.124l8.058 3.758M12.086 4.65l6.849 5.66M15.774 1.111l5.313 7.162"/></svg></a><a href="https://github.com/jaredclark0626" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a><a href="https://www.facebook.com/jared.clark.393" target="_blank" rel="noopener me" title="Facebook"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://jaredclark0626.github.io/posts/">Posts</a></li>
+			<li><a href="https://jaredclark0626.github.io/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>May 25, 2020</span></div>
+				<h1>Monitoring And Diagnostics App Service Plan</h1>
+			</header>
+			<div class="content">
+				<hr>
+<p>tags:</p>
+<ul>
+<li>App Service Plans</li>
+<li>App Service</li>
+<li>Azure</li>
+<li>Monitoring</li>
+<li>Diagnostics</li>
+</ul>
+<hr>
+<p>Short-hand:</p>
+<ul>
+<li>AS - App Service</li>
+<li>ASP - App Service Plan</li>
+</ul>
+<p>This will be the last blog in this series for Managing Azure App Services plans. In this blog I will give you an overview on monitoring and diagnostics for App Service plan. We will cover enabling logging, configuring logging, monitoring metrics and Application insights. Now let&rsquo;s get into an overview of Monitoring and Diagnostics for App Service Plans.</p>
+<p>Overview of Monitoring and Diagnostics</p>
+<p>There are two categories for capturing Monitoring and Diagnostics for an App Service Plan. First, we have Azure monitor which monitors the App Service plan. Next, there is Azure Logging which captures logs for your application running in an App Service plan. Those logs can be stored either on the App Service server or in an Azure Storage container. Let discuss these two categories in depth.</p>
+<p><img src="/img/MonitoringAndDiagnosticsAppServicePlan/image1.png" alt="Image1"></p>
+<p>Azure Monitor</p>
+<p>Azure monitor service can collect telemetry metrics for you App Service Plan. This collection of metrics can either happen on you on-premise or Azure environment. Some of the basic metrics Azure Monitor can collect include:</p>
+<ul>
+<li>CPU Usage</li>
+<li>Memory Usage</li>
+<li>I/O Usage</li>
+</ul>
+<p>Here is a link to a full list of metrics Azure Monitor can collect - <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported">https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported</a></p>
+<p>We can also setup alerts in Azure Monitor when specific metric thresholds are reached. One thing to note is Azure Monitor includes Azure Log Analytics and Application Insights. For Azure monitor we are charged on per GB usage. Log Analytics is an Analytics engine and management solution which includes its own query language. With Log Analytics the management solution collects data from various sources which then can be queued with pre-defined queries Log analytics provides.</p>
+<p>Application Insights monitors the overall health of your App Service Plan. This can monitor your App availability, App Performance, and App usage. You can configure Application insights either internally which will include code changes or externally which does not include code changes. There are visualization tools build into Application insights that allows you to get a high-level graphical view of your application. This allows you to see how data is flowing through your application. Application insights supports a verity of languages whether they are supported by Microsoft or the community.</p>
+<p>Link to what languages are supported by Application Insights - <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/app/platforms">https://docs.microsoft.com/en-us/azure/azure-monitor/app/platforms</a></p>
+<p>Now let&rsquo;s configure Application logging!</p>
+<p>Configuring Application Logging</p>
+<p>If you are using the ASP.NET or ASP.NET Core framework you can utilize the use predefined system classes to configure application monitoring.</p>
+<p>ASP.NET - System.Diagnostics.Trace</p>
+<p>ASP.NET Core - ASP.NET Core - Microsoft.Extensions.Logging.AzureAppServices</p>
+<p>(Not included in Microsoft.Asp.NetCore.AppMetaPackage)</p>
+<p>We can use these classes to log data to a console window and/or add logging to Azure. Open the solution file to you project and open &lsquo;Solution Explorer&rsquo;. Right click on &lsquo;Dependencies&rsquo; and click &lsquo;Manage NuGet Packages&rsquo;. Search for &lsquo;Microsoft.Extensions.Logging.AzureAppServices&rsquo; and install it into your solution.</p>
+<p><img src="/img/MonitoringAndDiagnosticsAppServicePlan/image2.png" alt="Image2"></p>
+<p>Once installed, if you expand the &lsquo;Nuget&rsquo; folder in your solution you will see the package. Now we will need to configure logging in the main &lsquo;Program.cs&rsquo; file. We need to add a &lsquo;using&rsquo; statement at the top of the program file to use the extension.</p>
+<p>Code - &lsquo;using Microsoft.Extensions.Logging;&rsquo;</p>
+<p>In the main method in the &lsquo;program.cs&rsquo; program file we want to configure logging by adding the following code to the &lsquo;IWebHostBuilder&rsquo; method.</p>
+<p>Code - &lsquo;.ConfigureLogging(logging =&gt; logging.AddAzureWebAppDiagnostics());&rsquo;</p>
+<p>IWebHostBuilder method -</p>
+<p>public static IWebHostBuilder CreateWebHostBuilder(string[] args) =&gt;</p>
+<pre><code>        WebHost.CreateDefaultBuilder(args) 
+
+            .UseStartup&lt;Startup&gt;() 
+
+        .ConfigureLogging(logging =&gt; logging.AddAzureWebAppDiagnostics()); 
+</code></pre>
+<p>To configure the output for the logging message you can add code to the individual program files in your application. You will need to add the &lsquo;using Microsoft.Extensions.Logging;&rsquo; to the top of the files you are configuring logging on. This allows you to call methods and functions for the NuGet package we added earlier. Once configured we can build the code locally and push it to Azure App Service.</p>
+<p>Enabling logging in the Azure App Service</p>
+<p>Log into the Azure portal and navigate to the App Service you would like to enable logging. Click on the &lsquo;App Service Logs&rsquo; tab, by default all the logging is turned off. The &lsquo;Application Logging (Filesystem)&rsquo; setting will enable the configuration settings we just applied to out application. These logs will then be written to a local file on the App Service file system. Note: This setting will only be enabled for 12 hours and then will be automatically disabled. This allows for a troubleshooting window. This gets disabled by default because it is resource extensive. There is an option to capture the level of error logging for the web application, which are listed below.</p>
+<p>Level</p>
+<ul>
+<li>Error</li>
+<li>Warning</li>
+<li>Information</li>
+<li>Verbose</li>
+</ul>
+<p>The logging you specified in code will correspond to the level you set under this option. There will be a &lsquo;LogFiles&rsquo; directory that gets created on the App Service. This is where we can go to grab the logs for troubleshooting. Keep in mind all the files located on the App Service can be streamed from the App Service to your local or a shared drive by using the Azure CLI. This comes in handy when you are troubleshooting issues from the past. Above we mentioned that the log &lsquo;Application Logging(File System)&rsquo; gets disabled by default after 12 hours, we can enable the &lsquo;Application Logging(Blob) which will write the log files to a blob storage container.</p>
+<p>There is an option to set the retention on the log files kept in the storage blob. Under the Application Logs section there are options to enable &lsquo;Web Server Logging&rsquo; logging, this allows you to capture http/https and IP address requests from the IIS VM Servers allocated to your App Service Plan. These logs get store on the App Service file structure under the &lsquo;http&rsquo; folder. Additionally, we have an option to capture &lsquo;Detailed Error Messages&rsquo; for the App Service which is linked to the folder named &lsquo;DetailedErrors&rsquo; on the App Service. The last option to enable for logging is called &lsquo;Failed Request Tracing&rsquo;, this allows you to capture the failed request hitting your App Service. The folder on the App Service that corresponds to the &lsquo;Failed Request Tracing&rsquo; is prefixed with &lsquo;W3SVC&rsquo;.</p>
+<p>App Service Directory Logging Mapping</p>
+<ul>
+<li>Application Logging (Filesystem) - .\LogFiles</li>
+<li>Web Server Logging - .\http</li>
+<li>Detailed Error Message - .\DetailedErrors</li>
+<li>Failed Request Tracing - .\W3SVC&hellip;&hellip;.</li>
+</ul>
+<p><img src="/img/MonitoringAndDiagnosticsAppServicePlan/image3.png" alt="Image3"></p>
+<p>There is a tab in the Azure App Service called &lsquo;Log Streaming&rsquo; which allows you to view generated logs in your App Service in real time. This comes in handy when you are troubleshooting an ongoing issue with your App Service. We can which between the &lsquo;Application Logs&rsquo; and the &lsquo;Web Server Logs&rsquo; to view generated logs in real time. There are additional options to clear, pause and start the log streaming. I haven&rsquo;t used this tool much in the past but it may come in hand for you and your team when tracking down complicated issues. We talked about the different types of logs we can generate for and App Service. Next, we will talk about Monitoring your App service by using metrics.</p>
+<p>Monitoring Azure App Service</p>
+<p>Navigate to your App Service in Azure and click on the &lsquo;Overview&rsquo; tab. At the bottom of the screen we get a few predefined metric graphs that Azure provides out of the box. Azure you allow you to edit each graph by double clicking on the graph. We can choose a time frame we would like to view in the chart by clicking on the &lsquo;Local Time&rsquo; icon on the upper right-hand side of the screen. Also, on the right-hand side we can change the chart type by clicking on the &lsquo;Line Chart&rsquo; drop down and choosing a different type of chart. We can drill down into the chart to see what scope of metrics the graph is showing. Click on the oval with the name of the app service and metric scope.</p>
+<p><img src="/img/MonitoringAndDiagnosticsAppServicePlan/image4.png" alt="Image4"></p>
+<p>Inside the metric scope we can change the scope of the metric to pull back different data points and configure the aggregation. Azure provide a wealth of data points that you can configure. Another cool feature that Azure provides is it allows you to pull multiple data points back in a single graph. So, we could configure &lsquo;Data In&rsquo; and &lsquo;Data Out&rsquo; in a single graph.</p>
+<p><img src="/img/MonitoringAndDiagnosticsAppServicePlan/image5.png" alt="Image5"></p>
+<p>We can export the graph in excel format if needed. Additionally, we can pin and rename the graph as needed. Let&rsquo;s look at how we can setup alerts on these metrics!</p>
+<p>Setting up Alerts for Metrics</p>
+<p>Search for &lsquo;Monitor&rsquo; in Azure and then select the &lsquo;Metrics&rsquo; tab on the left-hand side of the screen. We can scope our metrics to any resource in the Azure subscription. In our case we will be scoping the metrics to the App Service plan we created in a previous blog. When clicking on the &lsquo;Metrics&rsquo; tab a new window will appear to define the scope of the metrics. Select the resource you would like to capture the metrics on and click &lsquo;Apply&rsquo;. This allows you to capture multiple graphs from various Azure resources on a single-pane of glass. I thought I would mention this feature before moving on to setting up alerts for metrics.</p>
+<p>Select the &lsquo;Alerts&rsquo; tab and click &lsquo;New Alert Rule&rsquo;. Here we can select the resource that we would like to alert on by selecting the &lsquo;Select Resource&rsquo; link. Select the resource that you would like to alert on a click &lsquo;Done&rsquo;. Under the &lsquo;Condition&rsquo; section we can click &lsquo;Select Condition&rsquo; which will allow us to configure the condition we would like to be alerted on. In our case we are going to select the &ldquo;CPU Percentage&rsquo; metrics. At the bottom of the screen we can narrow down which instances we would like to be alerted on. Since the App Service is running on an App Service Plan there could be multiple instances provisioned depending on auto-scale. In our case we want to be alerted on all instances in the App Service plan.</p>
+<p>Under the &lsquo;Alert Logic&rsquo; we can specify when we want to be alerted. For example, we want an alert to be created when the &lsquo;CPU Percentage&rsquo; is &lsquo;Greater than&rsquo; the &lsquo;Average&rsquo; threshold of 70%. There are three options under &lsquo;Alert Logic&rsquo; which will need to be defined for your alert.</p>
+<ul>
+<li>Condition</li>
+<li>Time Aggregation</li>
+<li>Threshold</li>
+</ul>
+<p>Under the &lsquo;Evaluated Based On&rsquo; section we can configure how long this condition needs to be met before sending an alert. For example, if the &lsquo;CPU Percentage&rsquo; exceeds 70% for 5 minutes then we wanted to be alerted. We can configure the &lsquo;Frequency&rsquo; this metric is check by changing the &lsquo;Frequency&rsquo; option to &lsquo;Every 1 Minute&rsquo;. This will allow Azure monitor to check to see if this condition is met every 1 minute. Once configured click &lsquo;Done&rsquo; and an estimated monthly charge will be set showing you how much the alert is going to cost.</p>
+<p>Below we can add an &lsquo;Alert Rule Name&rsquo;, &lsquo;Description&rsquo; of the alert and its &lsquo;Severity&rsquo;. There is also another option to &lsquo;Enable rule upon creation&rsquo; which will enable the alert automatically. At the bottom of the screen we can define an action group. This allow us to configure actions to be taken when the alert condition is met. We are going to configure an &lsquo;Action Group&rsquo; to send out an email message to myself when the alert condition is met. Select &lsquo;Create Action Group&rsquo; button and specify the name of the &lsquo;Action Group&rsquo;. Under &lsquo;Actions&rsquo; we are going to name the action &lsquo;Send Email&rsquo; and change the &lsquo;Action Type&rsquo; to &lsquo;Email/SMS/Push/Voice&rsquo;. Under &lsquo;Edit Details&rsquo; we can specify the email address we would like the alert to be send to. Click &lsquo;Ok&rsquo; and then on the &lsquo;Action Group&rsquo; page click &lsquo;Ok&rsquo;</p>
+<p>Now we have successfully set up an alert in Azure monitor which is going to send an email out when our condition is met. We have talked about configuring logging for App Services and configuring alerts based on metrics captured in the App Service. This blog will end our series on Managing Azure App Service Plans.</p>
+<p>Until next time! Cheers!</p>
+<p>Jared Clark</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1995 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-05-25 10:34 -0400</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://jaredclark0626.github.io/posts/optimizing-app-service-delivery-azurecdn/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Optimizing App Service Delivery Azure CDN</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://jaredclark0626.github.io/">Jared Clark</a></p>
+		<p>
+			 &#183; <a href="https://jaredclark0626.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://jaredclark0626.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

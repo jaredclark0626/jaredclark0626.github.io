@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 03 May 2020 11:36:43 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2020 10:34:37 -0400</lastBuildDate>
     
 	<atom:link href="https://jaredclark0626.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Monitoring And Diagnostics App Service Plan</title>
+      <link>https://jaredclark0626.github.io/posts/monitoring-and-diagnostics-app-service-plan/</link>
+      <pubDate>Mon, 25 May 2020 10:34:37 -0400</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/posts/monitoring-and-diagnostics-app-service-plan/</guid>
+      <description>tags:
+ App Service Plans App Service Azure Monitoring Diagnostics   Short-hand:
+ AS - App Service ASP - App Service Plan  This will be the last blog in this series for Managing Azure App Services plans. In this blog I will give you an overview on monitoring and diagnostics for App Service plan. We will cover enabling logging, configuring logging, monitoring metrics and Application insights. Now let&amp;rsquo;s get into an overview of Monitoring and Diagnostics for App Service Plans.</description>
+    </item>
     
     <item>
       <title>Optimizing App Service Delivery Azure CDN</title>
