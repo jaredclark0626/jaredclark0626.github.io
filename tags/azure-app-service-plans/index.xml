@@ -18,8 +18,9 @@
       <pubDate>Fri, 17 Apr 2020 10:02:17 -0400</pubDate>
       
       <guid>https://jaredclark0626.github.io/posts/managing-microsoft-azure-app-service-plan/</guid>
-      <description>Short-hand:
- Azure DevOps - ADO Continuous Deployment - CD Continuous Integration - CI VS - Visual Studio  In this blog I will give you an overview of Microsoft App Service plans, how to create and app Service Plan and finally how to create an App Service. We will talk about options on how to deploy code to App Services. To kick this off let me give you an overview of Microsoft App Service Plan.</description>
+      <description>tags:
+ Azure Azure DevOps CI/CD Pipelines Azure App Service Plans  In this blog I will give you an overview of Microsoft App Service plans, how to create and app Service Plan and finally how to create an App Service. We will talk about options on how to deploy code to App Services. To kick this off let me give you an overview of Microsoft App Service Plan.
+App Service Plan Overview</description>
     </item>
     
   </channel>

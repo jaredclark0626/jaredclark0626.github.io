@@ -7,10 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 25 May 2020 10:34:37 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 03 Oct 2021 09:47:21 -0400</lastBuildDate>
     
 	<atom:link href="https://jaredclark0626.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Docker 101</title>
+      <link>https://jaredclark0626.github.io/posts/docker-101/</link>
+      <pubDate>Sun, 03 Oct 2021 09:47:21 -0400</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/posts/docker-101/</guid>
+      <description>Intro In this tutorial I will be talking about Docker and how to leverage docker in your environment. We will talk about how to install docker on your local machine, using docker, building containers with docker, docker architecture, and orchestration of docker containers. So let&amp;rsquo;s get started by talking about &amp;lsquo;What is Docker&amp;rsquo;. What is Docker? Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly.</description>
+    </item>
+    
+    <item>
+      <title>Introduction to ARM Templates</title>
+      <link>https://jaredclark0626.github.io/posts/introduction-to-arm-templates/</link>
+      <pubDate>Sat, 01 Aug 2020 08:19:17 -0400</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/posts/introduction-to-arm-templates/</guid>
+      <description>Short-hand:
+ ARM - Azure Resource Manager Azure DevOps - ADO CI/CD Pipelines - CI\CD  Introduction In this blog I will talk about Azure Resource Manager (ARM) templates and how we can implement them into a CI\CD pipeline in Azure DevOps. First, I will give a high level overview of ARM architecture and then I will dig into how we can automate cloud infrastructure using ARM templates in an orchestration tool such as Azure DevOps.</description>
+    </item>
     
     <item>
       <title>Monitoring And Diagnostics App Service Plan</title>
@@ -55,8 +74,9 @@ Overview of Scaling Up and Down App Service Plans</description>
       <pubDate>Fri, 17 Apr 2020 10:02:17 -0400</pubDate>
       
       <guid>https://jaredclark0626.github.io/posts/managing-microsoft-azure-app-service-plan/</guid>
-      <description>Short-hand:
- Azure DevOps - ADO Continuous Deployment - CD Continuous Integration - CI VS - Visual Studio  In this blog I will give you an overview of Microsoft App Service plans, how to create and app Service Plan and finally how to create an App Service. We will talk about options on how to deploy code to App Services. To kick this off let me give you an overview of Microsoft App Service Plan.</description>
+      <description>tags:
+ Azure Azure DevOps CI/CD Pipelines Azure App Service Plans  In this blog I will give you an overview of Microsoft App Service plans, how to create and app Service Plan and finally how to create an App Service. We will talk about options on how to deploy code to App Services. To kick this off let me give you an overview of Microsoft App Service Plan.
+App Service Plan Overview</description>
     </item>
     
     <item>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on Jared Clark</title>
+    <link>https://jaredclark0626.github.io/tags/docker/</link>
+    <description>Recent content in Docker on Jared Clark</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Sun, 03 Oct 2021 09:47:21 -0400</lastBuildDate>
+    
+	<atom:link href="https://jaredclark0626.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Docker 101</title>
+      <link>https://jaredclark0626.github.io/posts/docker-101/</link>
+      <pubDate>Sun, 03 Oct 2021 09:47:21 -0400</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/posts/docker-101/</guid>
+      <description>Intro In this tutorial I will be talking about Docker and how to leverage docker in your environment. We will talk about how to install docker on your local machine, using docker, building containers with docker, docker architecture, and orchestration of docker containers. So let&amp;rsquo;s get started by talking about &amp;lsquo;What is Docker&amp;rsquo;. What is Docker? Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -12,13 +12,24 @@
     
     
     <item>
+      <title>Introduction to ARM Templates</title>
+      <link>https://jaredclark0626.github.io/posts/introduction-to-arm-templates/</link>
+      <pubDate>Sat, 01 Aug 2020 08:19:17 -0400</pubDate>
+      
+      <guid>https://jaredclark0626.github.io/posts/introduction-to-arm-templates/</guid>
+      <description>Short-hand:
+ ARM - Azure Resource Manager Azure DevOps - ADO CI/CD Pipelines - CI\CD  Introduction In this blog I will talk about Azure Resource Manager (ARM) templates and how we can implement them into a CI\CD pipeline in Azure DevOps. First, I will give a high level overview of ARM architecture and then I will dig into how we can automate cloud infrastructure using ARM templates in an orchestration tool such as Azure DevOps.</description>
+    </item>
+    
+    <item>
       <title>Creating and deploying Microsoft Azure App Service Plan</title>
       <link>https://jaredclark0626.github.io/posts/managing-microsoft-azure-app-service-plan/</link>
       <pubDate>Fri, 17 Apr 2020 10:02:17 -0400</pubDate>
       
       <guid>https://jaredclark0626.github.io/posts/managing-microsoft-azure-app-service-plan/</guid>
-      <description>Short-hand:
- Azure DevOps - ADO Continuous Deployment - CD Continuous Integration - CI VS - Visual Studio  In this blog I will give you an overview of Microsoft App Service plans, how to create and app Service Plan and finally how to create an App Service. We will talk about options on how to deploy code to App Services. To kick this off let me give you an overview of Microsoft App Service Plan.</description>
+      <description>tags:
+ Azure Azure DevOps CI/CD Pipelines Azure App Service Plans  In this blog I will give you an overview of Microsoft App Service plans, how to create and app Service Plan and finally how to create an App Service. We will talk about options on how to deploy code to App Services. To kick this off let me give you an overview of Microsoft App Service Plan.
+App Service Plan Overview</description>
     </item>
     
   </channel>

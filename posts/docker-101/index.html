@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Docker 101">
+<meta itemprop="description" content="Intro In this tutorial I will be talking about Docker and how to leverage docker in your environment. We will talk about how to install docker on your local machine, using docker, building containers with docker, docker architecture, and orchestration of docker containers. So let&rsquo;s get started by talking about &lsquo;What is Docker&rsquo;. What is Docker? Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly.">
+<meta itemprop="datePublished" content="2021-10-03T09:47:21-04:00" />
+<meta itemprop="dateModified" content="2021-10-03T09:47:21-04:00" />
+<meta itemprop="wordCount" content="3127">
+
+
+
+<meta itemprop="keywords" content="Docker," /><meta property="og:title" content="Docker 101" />
+<meta property="og:description" content="Intro In this tutorial I will be talking about Docker and how to leverage docker in your environment. We will talk about how to install docker on your local machine, using docker, building containers with docker, docker architecture, and orchestration of docker containers. So let&rsquo;s get started by talking about &lsquo;What is Docker&rsquo;. What is Docker? Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jaredclark0626.github.io/posts/docker-101/" />
+<meta property="article:published_time" content="2021-10-03T09:47:21-04:00" />
+<meta property="article:modified_time" content="2021-10-03T09:47:21-04:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker 101"/>
+<meta name="twitter:description" content="Intro In this tutorial I will be talking about Docker and how to leverage docker in your environment. We will talk about how to install docker on your local machine, using docker, building containers with docker, docker architecture, and orchestration of docker containers. So let&rsquo;s get started by talking about &lsquo;What is Docker&rsquo;. What is Docker? Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Docker 101</title>
+	<link rel="stylesheet" href="https://jaredclark0626.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://jaredclark0626.github.io/">Jared Clark</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://jaredclark0626.github.io/posts/">Posts</a>
+				<a href="https://jaredclark0626.github.io/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://www.linkedin.com/in/jared-clark-549a0435/" target="_blank" rel="noopener me" title="Linkedin"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://stackoverflow.com/users/11244191/jclark0909" target="_blank" rel="noopener me" title="Stackoverflow"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.913 16.041v6.848h17.599v-6.848M7.16 18.696h8.925M7.65 13.937l8.675 1.8M9.214 9.124l8.058 3.758M12.086 4.65l6.849 5.66M15.774 1.111l5.313 7.162"/></svg></a><a href="https://github.com/jaredclark0626" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a><a href="https://www.facebook.com/jared.clark.393" target="_blank" rel="noopener me" title="Facebook"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://jaredclark0626.github.io/posts/">Posts</a></li>
+			<li><a href="https://jaredclark0626.github.io/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Oct 3, 2021</span></div>
+				<h1>Docker 101</h1>
+			</header>
+			<div class="content">
+				<h1 id="intro">Intro<a href="#intro" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<p>In this tutorial I will be talking about Docker and how to leverage docker in your environment. We will talk about how to install docker on your local machine, using docker, building containers with docker, docker architecture, and orchestration of docker containers. So let&rsquo;s get started by talking about &lsquo;What is Docker&rsquo;.
+<img src="/img/Docker101Img/image-0.png" alt="image-0"></p>
+<h2 id="what-is-docker">What is Docker?<a href="#what-is-docker" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications.</p>
+<p>Developers can create containers without Docker, but the platform makes it easier, simpler, and safer to build, deploy and manage containers. Docker is essentially a toolkit that enables developers to build, deploy, run, update, and stop containers using simple commands and work-saving automation through a single API.</p>
+<p>Docker is an open source containerization platform. It enables developers to package applications into containers—standardized executable components combining application source code with the operating system (OS) libraries and dependencies required to run that code in any environment</p>
+<p>Docker carves up a computer into sealed containers that run your code and gets your code to and from your computer. Docker is responsible for building these container and running code inside these container in an isolated controlled environment. There is a docker network where you can share and utilize other users predefined containers. Docker Is NOT a VM but an abstraction of a VM. This means you can have multiple containers running on a single VM all doing a specific job for your application to run.</p>
+<h2 id="what-is-a-container">What is a container?<a href="#what-is-a-container" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>A container is a self-contained unit of software where it has everything it needs to run the code. A container includes code, configs, processes, networking , all of its dependencies and the operating system.
+<img src="/img/Docker101Img/image-0.png" alt="image-0"></p>
+<p>For example, you could have a container running  that has a database instance running with all of its storage and a virtual network attached to that container which can talk to another container running your Web Server. Docker is responsible for building, deploying and tearing down this  containerized environment.</p>
+<p>Some things you should know before continuing with this tutorial would include the following:</p>
+<ul>
+<li>Basic command-line environment experience</li>
+<li>Basic networking knowledge</li>
+<li>PowerShell, Bash, and/or shell scripting</li>
+</ul>
+<h2 id="how-to-install-docker">How to install Docker?<a href="#how-to-install-docker" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>To get the MSI or EXE to install docker on your local system then click on the link below:</p>
+<ul>
+<li>Docker install - <a href="https://docs.docker.com/get-docker/">https://docs.docker.com/get-docker/</a></li>
+</ul>
+<p>In this tutorial we will be installing docker for windows but feel free to download the installer for your system. Once downloaded then you can open the download which will start the download process to your local system. If you are installing docker on windows then it will require that Hyper-V is enabled for the base VM image for the containers to be provisioned from. It will prompt your to enable Hyper-V on your local Windows machine. Please note, once the docker installation is completed it will prompt you to restart your local system. This is required because docker will be updating the Kernel on your local system to run containers.</p>
+<p>After your computer restarts, open a command line interface and run the following command to download the default docker image.</p>
+<ul>
+<li>Command: docker run hello-world</li>
+</ul>
+<p>Now you have downloaded the default docker image for the hello-would container to run on your local system.</p>
+<h2 id="using-docker">Using Docker?<a href="#using-docker" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>Now that docker is installed on your local system we will talk about docker commands and how to start using docker. Let&rsquo;s take a minute and talk about docker flow. The docker flow all starts with an image which makes up just about every file that is needs for a container to operate. The command below allows you to look at all the docker images downloaded to your local system:</p>
+<ul>
+<li>Command: docker images
+<img src="/img/Docker101Img/image-2.png" alt="image-2"></li>
+</ul>
+<p>As you can see there is some information displayed about the images downloaded to my local machine. Here you see a few column which are defined below:</p>
+<ul>
+<li>Repository – Name of the image</li>
+<li>Tag – Version of the image</li>
+<li>Image ID – Unique ID for that version of the image</li>
+<li>Created – Date of created image</li>
+<li>Size – The size of the image</li>
+</ul>
+<p>Tip: to remove and image you can run the following command:</p>
+<ul>
+<li>Command: docker rmi [image_id]</li>
+</ul>
+<p>Now that we have an image we can create a container off of that image that will be a living running isolated environment for our code to run.<br>
+<img src="/img/Docker101Img/image-3.png" alt="image-3"></p>
+<h2 id="docker-run">Docker run<a href="#docker-run" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>To create a container off the any image download you can run the following command:</p>
+<ul>
+<li>Command: docker run –ti ubuntu:latest bash</li>
+</ul>
+<p>Tip: &ndash;ti – Terminal interactive, which means you can navigate through the container when it is running.
+<img src="/img/Docker101Img/image-4.png" alt="image-4"></p>
+<p>To exit the container bash terminal, simple type &lsquo;exit&rsquo; or &lsquo;CTRL + D&rsquo;. This will allow you to exit the terminal of the running container. If you do not include the &lsquo;-ti&rsquo; parameter into the docker run command there would be no output in the terminal.
+<img src="/img/Docker101Img/image-5.png" alt="image-5"></p>
+<h2 id="view-docker-containers">View Docker Containers<a href="#view-docker-containers" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>If you want to view all the running containers you can use the command below:</p>
+<ul>
+<li>Command: docker container ls –a
+<img src="/img/Docker101Img/image-6.png" alt="image-6"></li>
+</ul>
+<p>Tip – The parameter &lsquo;-a&rsquo; list all running containers.</p>
+<p>Let&rsquo;s quickly talk about the information displayed from the output above. The &lsquo;Container ID&rsquo; is a unique ID assigned to the container during the container provisioning process. Please note, this is not the same ID as the &lsquo;Image ID&rsquo;.</p>
+<ul>
+<li>Image – Image that the container is provisioned from</li>
+<li>Command – Command type</li>
+<li>Create – Time the container was created.</li>
+<li>Status – Last know status from container</li>
+<li>Name – Unique name for provisioned container</li>
+</ul>
+<p>To stop a running container you can run the following command:</p>
+<ul>
+<li>Command: docker stop [container_name]
+When creating container you might run into an instance where you make a change to the container that you want to keep for all newly created containers. Docker has a feature known as &lsquo;Docker commit&rsquo; which allows you to create an image off the modified container. Please note, this does not affect the original image the container is provisioned from but creates an entirely new image from the updated container.
+<img src="/img/Docker101Img/image-7.png" alt="image-7"></li>
+</ul>
+<h2 id="docker-commit">Docker Commit<a href="#docker-commit" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>To create an image from an updated container then follow the steps below:
+Create a container from the base image:</p>
+<ul>
+<li>Command: docker run –ti ubuntu:latest bash
+Modify the container(create a new file):</li>
+<li>Command: touch New-File
+Exit the container:</li>
+<li>Command: exit
+List the latest container(grab the &lsquo;container id&rsquo;):</li>
+<li>Command: docker container ls –l<br>
+Create a new image off container:</li>
+<li>Command: docker commit [container_id]
+This will output a long string but what you want to grab is the string(image id) after the semi-colon and create a tag for your newly create image.</li>
+<li>Command: docker tag [image_id] [tag_name]
+<img src="/img/Docker101Img/image-8.png" alt="image-8"></li>
+</ul>
+<p>To list the new container with the tag then run the following command:</p>
+<ul>
+<li>Command: docker images
+<img src="/img/Docker101Img/image-9.png" alt="image-9"></li>
+</ul>
+<p>Now we have a newly created images with the changes we made in the container that we can use to provision new containers. To create a new container off the images we just created then you can run the following command:</p>
+<ul>
+<li>Command: docker run –ti my-new-image bash
+<img src="/img/Docker101Img/image-10.png" alt="image-10"></li>
+</ul>
+<p>You can skip the tag creation process for the newly created image by running the following command in your docker commit:</p>
+<ul>
+<li>Command: docker commit [container_name] [tag]
+<img src="/img/Docker101Img/image-11.png" alt="image-11"></li>
+</ul>
+<h2 id="docker-attachdetach">Docker Attach/Detach<a href="#docker-attachdetach" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>Let&rsquo;s take some time and talk about the most important concept in docker which is running things in docker.  The docker run command provisions a container off an image which contains a main process and when the container stops the process stops. One thing to note here would be docker containers have one main process and when that process completes the container de-provisions. Up until this point we have been running containers in an interactive session and exiting the container. If we want to run a container and run a process then remove the container we can run the following command as an example:</p>
+<ul>
+<li>Command: docker run –rm –ti ubuntu sleep 5</li>
+</ul>
+<p>Tip: The –rm parameter is a commonly used parameter to de-provision the container once the container finishes running its main process. This is used for easy clean-up when provisioning containers. Additionally, you can notice I have didn&rsquo;t include the &lsquo;latest&rsquo; tag in my command so docker understands if no tags are included for the image it will grab the latest.</p>
+<p>When running the command above it will provision a container from the ubuntu image and pass in the &lsquo;sleep 5&rsquo; bash command which will sleep the container for 5 seconds and once that process is completed it will de-provision the container.  We can pass in multiple commands into the container by running the following command:</p>
+<ul>
+<li>Command: docker run –ti ubuntu bash –c &ldquo;sleep 3; echo all done&rdquo;</li>
+</ul>
+<p>Tip: By adding the &lsquo;-c&rsquo; parameter into the docker command we can pass in commands we want to run on the container for its main process. Additionally, you can pass in commands by separating them with a semi-colon. So the command listed above will provision a container and run a bash command to sleep the console for 3 seconds then echo &lsquo;all done&rsquo;. Once finished running the commands it will de-provision the container.<br>
+<img src="/img/Docker101Img/image-12.png" alt="image-12"></p>
+<p>Let&rsquo;s talk about leaving things run in a container. If we want to provision a container and have it keep running in the background we could run the following command:</p>
+<ul>
+<li>Command: docker run –d –ti ubuntu bash</li>
+</ul>
+<p>Tip: The parameter &lsquo;-d&rsquo; allows the container to run in detached mode which means the container will run in the background until the main process is completed or is de-provisioned. Since we passed in the &lsquo;bash&rsquo; command that means this container will run forever until it is de-provisioned. If we get the name of the container we can run a docker command to attach to the container to run another process or exit the terminal.</p>
+<p>Get the container name of the last run container:</p>
+<ul>
+<li>Command: docker container ls –l
+Attach to the container:</li>
+<li>Command: docker attach [container_name]
+<img src="/img/Docker101Img/image-13.png" alt="image-13"></li>
+</ul>
+<p>Now what happens if you want to run more things in an already provisioned container. For example, we create a container and pass in the &lsquo;bash&rsquo; command to open a session to the command –line then we want to add a process to that container from troubleshooting purposes we could leverage the &lsquo;docker exec&rsquo; command. This command is used to add/start another process to the running container. Please note, you cannot use this command for adding port, volumes, networking, etc. To run the docker exec command to an already running container you can run the following commands:</p>
+<ul>
+<li>Command: docker exec [container_name] bash
+<img src="/img/Docker101Img/image-14.png" alt="image-14"></li>
+</ul>
+<p>This will allow us to open a bash session to an already running container for troubleshooting purposes. Sometimes we want to look at the logs for a container that is having trouble running its main process and in that case we can use the &lsquo;docker logs&rsquo; command. To set this up we will run a docker run command and pass in an invalid Bash command. This will run in the background and fail which in turn we will run the docker logs command to see what caused the issue.</p>
+<ul>
+<li>Broken command: docker run –name example –d ubuntu bash –c &ldquo;lose /etc/password&rdquo;</li>
+<li>Logs command: docker logs example
+<img src="/img/Docker101Img/image-15.png" alt="image-15"></li>
+</ul>
+<h2 id="stopdelete-containers">Stop/Delete Containers<a href="#stopdelete-containers" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>In order to stop and remove a running container you first need to stop the running container and then delete the container. Simply stopping the container will not automatically delete the container.</p>
+<ul>
+<li>Stop container: docker kill [container_name]</li>
+<li>Delete container: docker rm [container_name]
+Tip: To stop and delete all running container then you can run the following commands:</li>
+<li>Stop all containers: docker kill $(docker ps –q)</li>
+<li>Delete all containers: docker rm $(docker ps –a –q)</li>
+</ul>
+<p>When running a docker container you have the ability to allocate specific resources to a single container. If we want to allocate a specific amount of memory to a container we can run the following command:</p>
+<ul>
+<li>Command: docker run –memory [max_memory] [image_name] [command]
+Tip: To allocate  CPU limits to a container you can run the following command:</li>
+<li>Command: docker run –cpu-shares – Containers running will share the CPU resources</li>
+<li>Command: docker run –cpu-quota – Limits the CPU resources allocated to containers</li>
+</ul>
+<h2 id="exposing-ports">Exposing Ports<a href="#exposing-ports" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>By default when provisioning a container it is isolated from the internet which means it is part of your local private network. You can explicitly expose a container to the internet by opening ports on your container to allow traffic in and out of your container. Exposing ports in your container allows your container running on a private network to talk to things outside your private network. When exposing a port you need to explicitly specify the port inside the container and outside. You can expose any amount of ports and coordination between containers is required it you want containers to talk to one another. Below is an example with two running containers with ports exposed to one another and a third container to watch the traffic:</p>
+<ul>
+<li>Container one command: docker run –-rm –ti –p 45678:45678 –p 45679:45679–-name container-one ubuntu bash</li>
+</ul>
+<p>Tip: The –p docker command stand for &lsquo;Publish&rsquo; which defines which ports you want to open. As you can see there are two ports defined separated by a colon. The first port is the ingress port and the second port is the egress port.</p>
+<p>Once inside the container we can run a net cat program to see if the port is open and what traffic flow in and out of the container:</p>
+<ul>
+<li>Container one command: nc –lp 45678 | nc –lp 45679</li>
+</ul>
+<p>Open a second terminal window and create the second container that will talk to the first container.</p>
+<ul>
+<li>Container two command: docker run –-rm –ti ubuntu:14.04 bash</li>
+<li>Container two command: nc host.docker.internal 45678</li>
+</ul>
+<p>Open a third command window and provision a third container to watch the traffic:</p>
+<ul>
+<li>Container two command: docker run –-rm –ti ubuntu:14.04 bash</li>
+<li>Container two command: nc host.docker.internal 45679</li>
+</ul>
+<p>Back in the second container type whatever you would like and watch the text from one container into another.
+<img src="/img/Docker101Img/image-16.png" alt="image-16"></p>
+<p>You can dynamically open external ports to the container by not specifying the second port. For example, you can run the following docker command which is open the internal port 45678 and dynamically open the external port which docker will define.</p>
+<ul>
+<li>Command: docker run –-rm –ti –p 45678 –-name container-one ubuntu bash</li>
+</ul>
+<p>To define a specific protocol for the traffic coming through the ports you can run the following command:</p>
+<ul>
+<li>Command: docker run –p [outside-port:inside-port]/[tcp/udp]</li>
+</ul>
+<h2 id="docker-networking">Docker Networking<a href="#docker-networking" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>When exposing a port in Docker it creates a path from the container to the host network. Other containers can connect to that container by going out of its container into the host network and back into the container it is talking with.<br>
+<img src="/img/Docker101Img/image-17.png" alt="image-17"></p>
+<p>Docker comes with some networks by default. To look at the default networks you can run the following commands:</p>
+<ul>
+<li>Command: docker network ls
+<img src="/img/Docker101Img/image-18.png" alt="image-18"></li>
+</ul>
+<p>Types of networks described below:</p>
+<ul>
+<li>Bridge Network – Defines the default network the containers are deployed.</li>
+<li>Host Network – Host machine network and when you do not want the container to have an isolation at all. This poses security threats and should not be used except for testing.</li>
+<li>None – Defines if the container should have no networking at all.</li>
+</ul>
+<p>Now let&rsquo;s create a &lsquo;testing&rsquo; virtual network in docker. To create a virtual network run the commands below:</p>
+<ul>
+<li>Command: docker network create testing</li>
+</ul>
+<p>Once the network is created we can add a container to the at virtual network by running the following command:</p>
+<ul>
+<li>Command: docker run –rm –ti –net testing –name container-one ubuntu:14.04 bash</li>
+</ul>
+<p>To test the container network you can ping the name of the container name from inside the bash terminal by running the following command:</p>
+<ul>
+<li>Command: ping container-one
+<img src="/img/Docker101Img/image-19.png" alt="image-19"></li>
+</ul>
+<p>If you want to start second container in the same network and ping container one from the second container you can run the following commands:</p>
+<ul>
+<li>Command:  docker run –rm –ti –net testing –name container-two ubuntu:14.04 bash</li>
+<li>Command: ping container-one
+<img src="/img/Docker101Img/image-20.png" alt="image-20"></li>
+</ul>
+<p>Tip: To connect a running container to another network you could create a second network called &lsquo;network-1&rsquo; and run the following command to add it to both &lsquo;testing&rsquo; and &lsquo;network-1&rsquo; networks.</p>
+<ul>
+<li>Command: docker network connect network-1 container-one</li>
+</ul>
+<h2 id="docker-volumes">Docker Volumes<a href="#docker-volumes" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>Let&rsquo;s talk about sharing data across containers. Docker using &lsquo;volumes&rsquo; as a shared folder that can be used across various containers. With volumes you can share data between containers running in docker and share data between the host and the containers. There are two types of volumes in docker which are defined below:</p>
+<ul>
+<li>Persistent – The volume on the host machine will stay consistent when containers are using said volume</li>
+<li>Ephemeral – These volumes exist only when the container is using them. When the container stops the volume is deleted.</li>
+</ul>
+<p>Let&rsquo;s share a folder from our local machine(host) to a container. First, create a folder on your local machine.</p>
+<ul>
+<li>Command: mkdir example</li>
+</ul>
+<p>Once the folder is created on the host machine you can run the following command to create a container with the volume attached:</p>
+<ul>
+<li>Command: docker run –ti –v C:\Users\jclar\example:/shared-folder ubuntu bash</li>
+</ul>
+<p>Create a &lsquo;data&rsquo; folder inside the shared-folder in the container:</p>
+<ul>
+<li>Command: touch /shared-folder/data</li>
+</ul>
+<p>Exit the container and navigate to the &lsquo;example&rsquo; folder on your local machine to see the persistent data flow from the container to the host machine.
+<img src="/img/Docker101Img/image-21.png" alt="image-21"></p>
+<p>Tip: If you want to share a single file from the host machine to the container you need to explicitly list the files entire path. Additionally, you will need to make sure the file exists on the host machine because if the file does not exist it will create a folder with the file name on the container.</p>
+<p>Now let&rsquo;s create a shared volume between two containers. This volume is Ephemeral and will only exist when the containers are running.</p>
+<ul>
+<li>Command: docker run –ti –v /shared-data ubuntu bash</li>
+</ul>
+<p>Tip: The –v parameter used in this case will create a shared folder on the container NOT on the host.</p>
+<p>Put some data in the share-data folder by running the following command on the container:</p>
+<ul>
+<li>Command: echo hello-world &gt; /shared-data/data-file
+Now let&rsquo;s start up another container.</li>
+<li>Command: docker run –ti –volumes-from [container_name] ubuntu bash</li>
+</ul>
+<p>If you navigate to that file on the second container you will see the data. You can update the data-file and it will get updated on the first container. When both container stops it will get removed from both containers but if one container stops even if it’s the first container the shared folder will still exist on the second container. Only when all containers using that shared folder stop then the shared volume will get deleted.</p>
+<p>Now we are just scratching the surface of what docker can do and it upcoming blogs we will take a deeper dive into what docker. I hope you enjoyed reading this blog and I will see you in the next one.</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://jaredclark0626.github.io/tags/docker">Docker</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>3127 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021-10-03 09:47 -0400</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://jaredclark0626.github.io/posts/introduction-to-arm-templates/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Introduction to ARM Templates</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://jaredclark0626.github.io/">Jared Clark</a></p>
+		<p>
+			 &#183; <a href="https://jaredclark0626.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://jaredclark0626.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

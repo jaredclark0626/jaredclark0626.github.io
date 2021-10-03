@@ -3,17 +3,57 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://jaredclark0626.github.io/</loc>
-    <lastmod>2020-05-25T10:34:37-04:00</lastmod>
+    <loc>https://jaredclark0626.github.io/tags/docker/</loc>
+    <lastmod>2021-10-03T09:47:21-04:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jaredclark0626.github.io/posts/monitoring-and-diagnostics-app-service-plan/</loc>
-    <lastmod>2020-05-25T10:34:37-04:00</lastmod>
+    <loc>https://jaredclark0626.github.io/posts/docker-101/</loc>
+    <lastmod>2021-10-03T09:47:21-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredclark0626.github.io/</loc>
+    <lastmod>2021-10-03T09:47:21-04:00</lastmod>
   </url>
   
   <url>
     <loc>https://jaredclark0626.github.io/posts/</loc>
+    <lastmod>2021-10-03T09:47:21-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredclark0626.github.io/tags/</loc>
+    <lastmod>2021-10-03T09:47:21-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredclark0626.github.io/tags/arm-templates/</loc>
+    <lastmod>2020-08-01T08:19:17-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredclark0626.github.io/tags/azure/</loc>
+    <lastmod>2020-08-01T08:19:17-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredclark0626.github.io/tags/azure-devops/</loc>
+    <lastmod>2020-08-01T08:19:17-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredclark0626.github.io/tags/cloud-infrastructure/</loc>
+    <lastmod>2020-08-01T08:19:17-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredclark0626.github.io/posts/introduction-to-arm-templates/</loc>
+    <lastmod>2020-08-01T08:19:17-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredclark0626.github.io/posts/monitoring-and-diagnostics-app-service-plan/</loc>
     <lastmod>2020-05-25T10:34:37-04:00</lastmod>
   </url>
   
@@ -33,11 +73,6 @@
   </url>
   
   <url>
-    <loc>https://jaredclark0626.github.io/tags/azure/</loc>
-    <lastmod>2020-04-26T08:32:52-04:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://jaredclark0626.github.io/tags/scaling-up-and-down/</loc>
     <lastmod>2020-04-26T08:32:52-04:00</lastmod>
   </url>
@@ -48,17 +83,7 @@
   </url>
   
   <url>
-    <loc>https://jaredclark0626.github.io/tags/</loc>
-    <lastmod>2020-04-26T08:32:52-04:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://jaredclark0626.github.io/tags/azure-app-service-plans/</loc>
-    <lastmod>2020-04-17T10:02:17-04:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jaredclark0626.github.io/tags/azure-devops/</loc>
     <lastmod>2020-04-17T10:02:17-04:00</lastmod>
   </url>
   
